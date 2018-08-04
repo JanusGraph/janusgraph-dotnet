@@ -1,0 +1,14 @@
+[Dd]ebug/
+[Rr]elease/
+[Oo]bj/
+artifacts/
+
+# Cake
+tools/*
+!tools/packages.config
+
+# Visual Studio
+.vs/
+
+# JetBrains Rider
+.idea/
