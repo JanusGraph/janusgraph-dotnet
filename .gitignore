@@ -5,7 +5,7 @@ artifacts/
 
 # Cake
 tools/*
-!tools/packages.config
+!tools/cake_version
 
 # Visual Studio
 .vs/
