@@ -37,15 +37,13 @@ if [ ! -d "$TOOLS_DIR" ]; then
 fi
 
 ###########################################################################
-# INSTALL .NET CORE CLI
+# ENSURE .NET CORE CLI IS PRESENT
 ###########################################################################
 
 if ! [ -x "$(command -v dotnet)" ]; then
     (>&2 echo "Cannot find dotnet executable on this system!")
     exit 1
 fi
-export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 ###########################################################################
 # INSTALL CAKE

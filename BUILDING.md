@@ -6,11 +6,9 @@ JanusGraph.Net uses [Cake](https://cakebuild.net/) for build automation to get d
 
 [.NET Core SDK 2.1](https://www.microsoft.com/net/download) is needed to build and test the project. Docker needs to be running in order to execute the integration tests as they automatically start a JanusGraph Docker container.
 
-On Linux, the build currently also requires Mono.
-
 ## Build Scripts
 
-The repository contains two builds scripts, one for Linux (`build.sh`) and one for Windows (`build.ps1`). These scripts bootstrap and execute the Cake script (`build.cake`) which contains different tasks for building and testing.
+The repository contains two build scripts, one for Linux (`build.sh`) and one for Windows (`build.ps1`). These scripts bootstrap and execute the Cake script (`build.cake`) which contains different tasks for building and testing.
 
 When these scripts are executed without any arguments, then the library will be built and tested.
 

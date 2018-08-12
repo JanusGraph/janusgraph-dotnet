@@ -1,9 +1,9 @@
 language: csharp
+mono: none
 os:
   - linux
 sudo: enabled
 dist: trusty
-mono: latest
 dotnet: 2.1
 services:
   - docker
