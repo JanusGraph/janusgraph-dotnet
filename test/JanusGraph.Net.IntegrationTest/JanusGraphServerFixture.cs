@@ -1,7 +1,7 @@
 ﻿#region License
 
 /*
- * Copyright 2018 JanusGraph Authors
+ * Copyright 2018 JanusGraph.Net Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,9 @@
 
 #endregion
 
+using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using TestContainers.Core.Builders;
 using Xunit;
 
@@ -26,8 +28,19 @@ namespace JanusGraph.Net.IntegrationTest
 {
     public class JanusGraphServerFixture : IAsyncLifetime
     {
-        private readonly GremlinServerContainer _container = new GenericContainerBuilder<GremlinServerContainer>()
-            .Begin().WithImage("florianhockmann/janusgraph-testing:latest").WithExposedPorts(8182).Build();
+        private readonly GremlinServerContainer _container;
+
+        public JanusGraphServerFixture()
+        {
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var dockerImage = config["dockerImage"];
+            var port = Convert.ToInt32(config["serverPort"]);
+            _container = new GenericContainerBuilder<GremlinServerContainer>()
+                .Begin()
+                .WithImage(dockerImage)
+                .WithExposedPorts(port)
+                .Build();
+        }
 
         public string Host => _container.Host;
         public int Port => _container.Port;

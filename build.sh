@@ -1,4 +1,19 @@
 #!/bin/bash
+#
+# Copyright 2018 JanusGraph.Net Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 ##########################################################################
 # Bash bootstrapper for Cake with .Net Core.
 ##########################################################################
@@ -54,7 +69,14 @@ if [ ! -f "$CAKE_DLL" ]; then
 
     # Download the Cake.CoreCLR nuget package and save it as a *.zip file.
     if [ ! -f "$ZIP_NAME" ]; then
-        wget -O $ZIP_NAME https://www.nuget.org/api/v2/package/Cake.CoreCLR/$CAKE_VERSION
+        if [ -x "$(command -v wget)" ]; then
+            wget -O $ZIP_NAME https://www.nuget.org/api/v2/package/Cake.CoreCLR/$CAKE_VERSION
+        elif [ -x "$(command -v curl)" ]; then
+                curl -RLo $ZIP_NAME https://www.nuget.org/api/v2/package/Cake.CoreCLR/$CAKE_VERSION
+        else
+            (>&2 echo "Cannot find wget or curl executable on this system which is necessary to install cake!")
+            exit 1
+        fi        
     fi
 
     # Unpack the zip file into the tools folder.

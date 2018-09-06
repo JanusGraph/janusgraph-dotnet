@@ -9,7 +9,9 @@
     <Title>JanusGraph.Net</Title>
     <Authors>JanusGraph</Authors>
     <Description>
-      JanusGraph.Net is the .NET driver of JanusGraph. It is based on Apache TinkerPop™'s Gremlin.Net.
+      JanusGraph.Net is the .NET driver of JanusGraph. It extends Apache
+      TinkerPop™'s Gremlin.Net as its core dependency with additional support
+      for JanusGraph-specific types.
     </Description>
     <PackageId>JanusGraph.Net</PackageId>
     <PackageTags>janusgraph;gremlin</PackageTags>
