@@ -31,8 +31,8 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         public void SerializeAndDeserialize_ValidPoint_SamePoint()
         {
             var point = Geoshape.Point(1.234, 9.87);
-            var writer = GraphSONWriterBuilder.Build().Create();
-            var reader = GraphSONReaderBuilder.Build().Create();
+            var writer = JanusGraphSONWriterBuilder.Build().Create();
+            var reader = JanusGraphSONReaderBuilder.Build().Create();
 
             var graphSon = writer.WriteObject(point);
             var readPoint = reader.ToObject(JToken.Parse(graphSon));

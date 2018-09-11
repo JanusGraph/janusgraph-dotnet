@@ -44,6 +44,11 @@ namespace JanusGraph.Net.Geoshapes
         /// </summary>
         public double Longitude { get; }
 
+        /// <summary>
+        ///     Gets the coordinates of this point in the form: [longitude, latitude].
+        /// </summary>
+        public double[] Coordinates => new[] {Longitude, Latitude};
+        
         /// <inheritdoc />
         public bool Equals(Point other)
         {

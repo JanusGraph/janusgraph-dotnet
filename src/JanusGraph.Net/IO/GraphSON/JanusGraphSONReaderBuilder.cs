@@ -27,7 +27,7 @@ namespace JanusGraph.Net.IO.GraphSON
     ///     Creates a <see cref="GraphSONReader" /> with the default JanusGraph deserializers and allows adding of custom
     ///     deserializers.
     /// </summary>
-    public class GraphSONReaderBuilder
+    public class JanusGraphSONReaderBuilder
     {
         private readonly Dictionary<string, IGraphSONDeserializer> _deserializerByGraphSONType =
             new Dictionary<string, IGraphSONDeserializer>
@@ -36,16 +36,16 @@ namespace JanusGraph.Net.IO.GraphSON
                 {"janusgraph:RelationIdentifier", new RelationIdentifierDeserializer()}
             };
 
-        private GraphSONReaderBuilder()
+        private JanusGraphSONReaderBuilder()
         {
         }
 
         /// <summary>
-        ///     Initializes a <see cref="GraphSONReaderBuilder" />.
+        ///     Initializes a <see cref="JanusGraphSONReaderBuilder" />.
         /// </summary>
-        public static GraphSONReaderBuilder Build()
+        public static JanusGraphSONReaderBuilder Build()
         {
-            return new GraphSONReaderBuilder();
+            return new JanusGraphSONReaderBuilder();
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace JanusGraph.Net.IO.GraphSON
         /// </summary>
         /// <param name="graphSONType">The GraphSON type the deserializer should be registered for.</param>
         /// <param name="deserializer">The deserializer to register.</param>
-        public GraphSONReaderBuilder RegisterDeserializer(string graphSONType,
+        public JanusGraphSONReaderBuilder RegisterDeserializer(string graphSONType,
             IGraphSONDeserializer deserializer)
         {
             _deserializerByGraphSONType[graphSONType] = deserializer;

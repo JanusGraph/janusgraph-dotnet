@@ -29,7 +29,7 @@ namespace JanusGraph.Net.IO.GraphSON
     ///     Creates a <see cref="GraphSONWriter" /> with the default JanusGraph serializers and allows adding of custom
     ///     serializers.
     /// </summary>
-    public class GraphSONWriterBuilder
+    public class JanusGraphSONWriterBuilder
     {
         private readonly Dictionary<Type, IGraphSONSerializer> _serializerByType =
             new Dictionary<Type, IGraphSONSerializer>
@@ -38,16 +38,16 @@ namespace JanusGraph.Net.IO.GraphSON
                 {typeof(RelationIdentifier), new RelationIdentifierSerializer()}
             };
 
-        private GraphSONWriterBuilder()
+        private JanusGraphSONWriterBuilder()
         {
         }
 
         /// <summary>
-        ///     Initializes a <see cref="GraphSONWriterBuilder" />.
+        ///     Initializes a <see cref="JanusGraphSONWriterBuilder" />.
         /// </summary>
-        public static GraphSONWriterBuilder Build()
+        public static JanusGraphSONWriterBuilder Build()
         {
-            return new GraphSONWriterBuilder();
+            return new JanusGraphSONWriterBuilder();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace JanusGraph.Net.IO.GraphSON
         /// </summary>
         /// <param name="type">The type the serializer should be registered for.</param>
         /// <param name="serializer">The serializer to register.</param>
-        public GraphSONWriterBuilder RegisterSerializer(Type type, IGraphSONSerializer serializer)
+        public JanusGraphSONWriterBuilder RegisterSerializer(Type type, IGraphSONSerializer serializer)
         {
             _serializerByType[type] = serializer;
             return this;

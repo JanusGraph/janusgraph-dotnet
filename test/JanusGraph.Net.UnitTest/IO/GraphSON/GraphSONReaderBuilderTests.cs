@@ -37,7 +37,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
             var customDeserializer = new DeserializerFake {DeserializationResult = deserializationResult};
             var graphSon = "{\"@type\":\"" + graphSONType + "\",\"@value\":0}";
 
-            var reader = GraphSONReaderBuilder.Build().RegisterDeserializer(graphSONType, customDeserializer).Create();
+            var reader = JanusGraphSONReaderBuilder.Build().RegisterDeserializer(graphSONType, customDeserializer).Create();
 
             Assert.Equal(deserializationResult, reader.ToObject(JToken.Parse(graphSon)));
         }

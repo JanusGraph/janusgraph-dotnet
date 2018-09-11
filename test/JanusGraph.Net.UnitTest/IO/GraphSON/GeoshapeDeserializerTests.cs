@@ -37,7 +37,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
             var graphSon = "{\"@type\":\"janusgraph:Geoshape\",\"@value\":{\"coordinates\":[" +
                            longitude.ToString(CultureInfo.InvariantCulture) + "," +
                            latitude.ToString(CultureInfo.InvariantCulture) + "]}}";
-            var reader = GraphSONReaderBuilder.Build().Create();
+            var reader = JanusGraphSONReaderBuilder.Build().Create();
 
             var readPoint = reader.ToObject(JToken.Parse(graphSon));
 
@@ -50,7 +50,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         {
             const string graphSon =
                 "{\"@type\":\"janusgraph:Geoshape\",\"@value\":{\"geometry\":{\"type\":\"Unknown\"}}}";
-            var reader = GraphSONReaderBuilder.Build().Create();
+            var reader = JanusGraphSONReaderBuilder.Build().Create();
 
             Assert.Throws<InvalidOperationException>(() => reader.ToObject(JToken.Parse(graphSon)));
         }

@@ -37,7 +37,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         {
             var customSerializer = SerializerFake.Register(graphSonTypeToUse, dataToSerialize);
 
-            var writer = GraphSONWriterBuilder.Build().RegisterSerializer(dataToSerialize.GetType(), customSerializer)
+            var writer = JanusGraphSONWriterBuilder.Build().RegisterSerializer(dataToSerialize.GetType(), customSerializer)
                 .Create();
 
             Assert.Equal(customSerializer.DeserializationResult, writer.WriteObject(dataToSerialize));
@@ -48,7 +48,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         {
             var customSerializer = SerializerFake.Register("janusgraph:Geoshape", Geoshape.Point(1, 2));
 
-            var writer = GraphSONWriterBuilder.Build().RegisterSerializer(typeof(Point), customSerializer)
+            var writer = JanusGraphSONWriterBuilder.Build().RegisterSerializer(typeof(Point), customSerializer)
                 .Create();
 
             Assert.Equal(customSerializer.DeserializationResult, writer.WriteObject(Geoshape.Point(1, 2)));

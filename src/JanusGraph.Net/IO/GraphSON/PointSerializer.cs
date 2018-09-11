@@ -30,8 +30,7 @@ namespace JanusGraph.Net.IO.GraphSON
         {
             var point = (Point) objectData;
             return GraphSONUtil.ToTypedValue("Geoshape",
-                new Dictionary<string, object> {{"coordinates", new[] {point.Longitude, point.Latitude}}},
-                "janusgraph");
+                new Dictionary<string, object> {{"coordinates", point.Coordinates}}, "janusgraph");
         }
     }
 }

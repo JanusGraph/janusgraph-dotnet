@@ -32,71 +32,48 @@ namespace JanusGraph.Net
         /// </summary>
         /// <param name="query">The query to search.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextContains(string query)
-        {
-            return new P("textContains", query);
-        }
-
+        public static P TextContains(string query) => new P("textContains", query);
 
         /// <summary>
         ///     Is true if (at least) one word inside the text string begins with the query string.
         /// </summary>
         /// <param name="query">The query to search.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextContainsPrefix(string query)
-        {
-            return new P("textContainsPrefix", query);
-        }
+        public static P TextContainsPrefix(string query) => new P("textContainsPrefix", query);
 
         /// <summary>
         ///     Is true if (at least) one word inside the text string matches the given regular expression.
         /// </summary>
         /// <param name="regex">The regular expression.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextContainsRegex(string regex)
-        {
-            return new P("textContainsRegex", regex);
-        }
-
+        public static P TextContainsRegex(string regex) => new P("textContainsRegex", regex);
         /// <summary>
         ///     Is true if (at least) one word inside the text string is similar to the query String (based on Levenshtein edit
         ///     distance).
         /// </summary>
         /// <param name="query">The query to search.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextContainsFuzzy(string query)
-        {
-            return new P("textContainsFuzzy", query);
-        }
+        public static P TextContainsFuzzy(string query) => new P("textContainsFuzzy", query);
 
         /// <summary>
         ///     Is true if the string value starts with the given query string.
         /// </summary>
         /// <param name="query">The query to search.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextPrefix(string query)
-        {
-            return new P("textPrefix", query);
-        }
+        public static P TextPrefix(string query) => new P("textPrefix", query);
 
         /// <summary>
         ///     Is true if the string value matches the given regular expression in its entirety.
         /// </summary>
         /// <param name="regex">The regular expression.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextRegex(string regex)
-        {
-            return new P("textRegex", regex);
-        }
+        public static P TextRegex(string regex) => new P("textRegex", regex);
 
         /// <summary>
         ///     Is true if the string value is similar to the given query string (based on Levenshtein edit distance).
         /// </summary>
         /// <param name="query">The query to search.</param>
         /// <returns>The text predicate.</returns>
-        public static P TextFuzzy(string query)
-        {
-            return new P("textFuzzy", query);
-        }
+        public static P TextFuzzy(string query) => new P("textFuzzy", query);
     }
 }

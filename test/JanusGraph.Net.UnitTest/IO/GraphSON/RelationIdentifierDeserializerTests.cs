@@ -31,7 +31,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         {
             const string graphSon =
                 "{\"@type\":\"janusgraph:RelationIdentifier\",\"@value\":{\"relationId\":\"3k1-360-6c5-39c\"}}";
-            var reader = GraphSONReaderBuilder.Build().Create();
+            var reader = JanusGraphSONReaderBuilder.Build().Create();
 
             var readRelationIdentifier = reader.ToObject(JToken.Parse(graphSon));
 

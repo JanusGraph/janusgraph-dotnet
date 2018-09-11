@@ -30,8 +30,8 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         public void SerializeAndDeserialize_ValidRelationIdentifier_SameRelationIdentifier()
         {
             var relationIdentifier = new RelationIdentifier("someRelationId");
-            var writer = GraphSONWriterBuilder.Build().Create();
-            var reader = GraphSONReaderBuilder.Build().Create();
+            var writer = JanusGraphSONWriterBuilder.Build().Create();
+            var reader = JanusGraphSONReaderBuilder.Build().Create();
 
             var graphSon = writer.WriteObject(relationIdentifier);
             var readRelationIdentifier = reader.ToObject(JToken.Parse(graphSon));

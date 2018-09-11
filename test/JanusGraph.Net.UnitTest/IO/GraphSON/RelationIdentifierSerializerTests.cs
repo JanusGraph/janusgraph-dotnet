@@ -30,7 +30,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         {
             const string relationId = "4qp-360-7x1-3aw";
             var relationIdentifier = new RelationIdentifier(relationId);
-            var writer = GraphSONWriterBuilder.Build().Create();
+            var writer = JanusGraphSONWriterBuilder.Build().Create();
 
             var graphSon = writer.WriteObject(relationIdentifier);
 

@@ -33,7 +33,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         public void Write_PointWithGivenCoordinates_ExpectedGraphSon(double latitude, double longitude)
         {
             var point = Geoshape.Point(latitude, longitude);
-            var writer = GraphSONWriterBuilder.Build().Create();
+            var writer = JanusGraphSONWriterBuilder.Build().Create();
 
             var graphSon = writer.WriteObject(point);
 
