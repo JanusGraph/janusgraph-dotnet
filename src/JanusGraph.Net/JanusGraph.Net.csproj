@@ -16,7 +16,7 @@
     <PackageId>JanusGraph.Net</PackageId>
     <PackageTags>janusgraph;gremlin</PackageTags>
     <PackageProjectUrl>http://janusgraph.org/</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/JanusGraph/janusgraph-dotnet/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/JanusGraph/janusgraph-dotnet</RepositoryUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/JanusGraph/logos/master/RGB%20-%20PNG%20small/JanusGraph%20logomark%20color%20RGB.png</PackageIconUrl>
   </PropertyGroup>

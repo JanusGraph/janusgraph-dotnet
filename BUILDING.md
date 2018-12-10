@@ -5,10 +5,8 @@ deterministic builds across platforms.
 
 ## Requirements
 
-* [.NET Core SDK 2.1][dotnet-sdk] is needed to
-build and test the project.
-* [Docker][docker] needs to be running in order to execute the
-integration tests as they automatically start a JanusGraph Docker container.
+* [.NET Core SDK (version >= 2.1)][dotnet-sdk] is needed to build and test the project.
+* [Docker][docker] needs to be running in order to execute the integration tests as they automatically start a JanusGraph Docker container.
 
 ## Build Scripts
 
