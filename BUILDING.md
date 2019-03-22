@@ -5,28 +5,28 @@ deterministic builds across platforms.
 
 ## Requirements
 
-* [.NET Core SDK (version >= 2.1)][dotnet-sdk] is needed to build and test the project.
+* [.NET Core SDK (version >= 2.1.400)][dotnet-sdk] is needed to build and test the project.
 * [Docker][docker] needs to be running in order to execute the integration tests as they automatically start a JanusGraph Docker container.
 
-## Build Scripts
+## Cake Build Script
 
-The repository contains two build scripts, one for Linux (`build.sh`) and one
-for Windows (`build.ps1`). These scripts bootstrap and execute the Cake
-script (`build.cake`) which contains different tasks for building and testing.
+To execute the Cake build script, the Cake .NET CLI tool needs to be installed:
 
-When these scripts are executed without any arguments, then the library will be
-built and tested.
+```sh
+dotnet tool install -g Cake.Tool
+```
 
+Afterwards, the library can be built by executing:
+
+```sh
+dotnet cake
+```
+
+By default, the script builds and tests the library.
 Other tasks can be executed by specifying them as targets:
 
 ```sh
-./build.sh --target Pack
-```
-
-or on Windows:
-
-```sh
-./build.ps1 -target Pack
+dotnet cake --target=Pack
 ```
 
 The shown `Pack` task packs the library into a NuGet package after building and
