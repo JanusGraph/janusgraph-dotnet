@@ -21,5 +21,10 @@ dist: trusty
 dotnet: 2.1
 services:
   - docker
+before_install:
+  - dotnet tool install -g Cake.Tool
+  # We need to add the tools directory to the PATH because .NET Core SDK was installed in this session:
+  # (Source: https://github.com/dotnet/cli/issues/8368#issuecomment-440006456 )
+  - source /etc/profile.d/dotnet-cli-tools-bin-path.sh
 script:
-  - ./build.sh
+  - dotnet cake
