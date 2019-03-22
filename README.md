@@ -1,5 +1,7 @@
 # JanusGraph.Net
 
+[![Build Status][Travis-badge]][Travis-url]
+
 JanusGraph.Net is the .NET driver of [JanusGraph][JanusGraph]. It extends
 Apache TinkerPop™'s [Gremlin.Net][Gremlin.Net] as its core dependency
 with additional support for JanusGraph-specific types.
@@ -46,6 +48,8 @@ and documentation is provided under the [CC-BY-4.0 license](CC-BY-4.0.txt). For
 details about this dual-license structure, please see
 [`LICENSE.txt`](LICENSE.txt).
 
+[Travis-badge]: https://travis-ci.org/JanusGraph/janusgraph-dotnet.svg?branch=master
+[Travis-url]: https://travis-ci.org/JanusGraph/janusgraph-dotnet
 [JanusGraph]: http://janusgraph.org/
 [Gremlin.Net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
 [text-predicates]: https://docs.janusgraph.org/latest/search-predicates.html#_text_predicate
