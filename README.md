@@ -1,9 +1,9 @@
 # JanusGraph.Net
 
-[![Build Status][Travis-badge]][Travis-url]
+[![Build Status][travis-badge]][travis-url]
 
-JanusGraph.Net is the .NET driver of [JanusGraph][JanusGraph]. It extends
-Apache TinkerPop™'s [Gremlin.Net][Gremlin.Net] as its core dependency
+JanusGraph.Net is the .NET driver of [JanusGraph][janusgraph]. It extends
+Apache TinkerPop™'s [Gremlin.Net][gremlin.net] as its core dependency
 with additional support for JanusGraph-specific types.
 
 ## Documentation
@@ -29,7 +29,7 @@ construct [Geoshapes][geoshapes].
 
 JanusGraph.Net uses the same communication channels as JanusGraph in general.
 So, please refer to the
-[_Community_ section in JanusGraph's main repository][JanusGraph-community]
+[_Community_ section in JanusGraph's main repository][janusgraph-community]
 for more information about these various channels.
 
 Please use GitHub issues only to report bugs or request features.
@@ -37,7 +37,7 @@ Please use GitHub issues only to report bugs or request features.
 ## Contributing
 
 Please see
-[`CONTRIBUTING.md` in JanusGraph's main repository][JanusGraph-contributing]
+[`CONTRIBUTING.md` in JanusGraph's main repository][janusgraph-contributing]
 for more information, including CLAs and best practices for working with
 GitHub.
 
@@ -48,11 +48,11 @@ and documentation is provided under the [CC-BY-4.0 license](CC-BY-4.0.txt). For
 details about this dual-license structure, please see
 [`LICENSE.txt`](LICENSE.txt).
 
-[Travis-badge]: https://travis-ci.org/JanusGraph/janusgraph-dotnet.svg?branch=master
-[Travis-url]: https://travis-ci.org/JanusGraph/janusgraph-dotnet
-[JanusGraph]: http://janusgraph.org/
-[Gremlin.Net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
+[travis-badge]: https://travis-ci.org/JanusGraph/janusgraph-dotnet.svg?branch=master
+[travis-url]: https://travis-ci.org/JanusGraph/janusgraph-dotnet
+[janusgraph]: http://janusgraph.org/
+[gremlin.net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
 [text-predicates]: https://docs.janusgraph.org/latest/search-predicates.html#_text_predicate
 [geoshapes]: https://docs.janusgraph.org/latest/search-predicates.html#geoshape
-[JanusGraph-community]: https://github.com/JanusGraph/janusgraph#community
-[JanusGraph-contributing]: https://github.com/JanusGraph/janusgraph/blob/master/CONTRIBUTING.md
+[janusgraph-community]: https://github.com/JanusGraph/janusgraph#community
+[janusgraph-contributing]: https://github.com/JanusGraph/janusgraph/blob/master/CONTRIBUTING.md
