@@ -28,3 +28,9 @@ before_install:
   - source /etc/profile.d/dotnet-cli-tools-bin-path.sh
 script:
   - dotnet cake
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: dotnet cake --target=Push --apiKey=$NUGET_API_KEY
+  on:
+    tags: true
