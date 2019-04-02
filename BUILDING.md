@@ -32,6 +32,28 @@ dotnet cake --target=Pack
 The shown `Pack` task packs the library into a NuGet package after building and
 testing it.
 
+## Deployment
+
+We use continuous deployment via Travis to push NuGet packages to nuget.org.
+To create a new release, you only have to create a [git tag][git-tag] for the
+release:
+
+```sh
+git tag -a v0.1.0 -m "JanusGraph.Net 0.1.0 release"
+```
+
+and then push this tag:
+
+```sh
+git push origin v0.1.0
+```
+
+This will trigger a deployment via Travis after the usual build has completed
+successfully.
+The version number used for the tag should correspond to the version in the
+`.csproj` file as that version is used for the NuGet package.
+
 [cake]: https://cakebuild.net/
 [dotnet-sdk]: https://www.microsoft.com/net/download
 [docker]: https://www.docker.com/
+[git-tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
