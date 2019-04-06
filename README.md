@@ -1,5 +1,7 @@
 # JanusGraph.Net
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb69004e41f64f03be82228e6faaedd1)](https://app.codacy.com/app/JanusGraph/janusgraph-dotnet?utm_source=github.com&utm_medium=referral&utm_content=JanusGraph/janusgraph-dotnet&utm_campaign=Badge_Grade_Dashboard)
+
 [![Build Status][travis-badge]][travis-url]
 
 JanusGraph.Net is the .NET driver of [JanusGraph][janusgraph]. It extends
