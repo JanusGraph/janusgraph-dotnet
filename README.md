@@ -7,7 +7,7 @@ with additional support for JanusGraph-specific types.
 [![Build Status][travis-badge]][travis-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
 
-## Documentation
+## Usage
 
 JanusGraph.Net includes a `JanusGraphClientBuilder` that can be used to build
 a `IGremlinClient` pre-configured for JanusGraph. This client can then be used
@@ -17,14 +17,63 @@ to configure a `GraphTraversalSource`:
 var client = JanusGraphClientBuilder
     .BuildClientForServer(new GremlinServer("localhost", 8182))
     .Create();
+// The client should be disposed on shut down to release resources
+// and to close open connections with client.Dispose()
 var g = new Graph().Traversal().WithRemote(new DriverRemoteConnection(client));
+// Reuse 'g' across the application
 ```
 
+The `GraphTraversalSource` `g` can now be used to spawn Gremlin traversals:
+
+```cs
+var herculesAge = g.V().Has("demigod", "name", "hercules").Values<int>("age")
+    .Next();
+Console.WriteLine($"Hercules is {herculesAge} years old.");
+```
+
+The traversal can also be executed asynchronously by using `Promise()` which is
+recommended as the underlying driver in Gremlin.Net also works
+asynchronously:
+
+```cs
+var herculesAge = await g.V().Has("demigod", "name", "hercules")
+    .Values<int>("age")
+    .Promise(t => t.Next());
+```
+
+Refer to the chapter [Gremlin Query Language][gremlin-chapter] in the
+JanusGraph docs for an introduction to Gremlin and pointers to further
+resources.
+The main syntactical difference for Gremlin.Net is that it follows .NET naming
+conventions, e.g., method names use PascalCase instead of camelCase.
+
+### Text Predicates
+
 The `Text` class provides methods for
-[full-text and string searches][text-predicates].
+[full-text and string searches][text-predicates]:
+
+```cs
+await g.V().Has("demigod", "name", Text.TextPrefix("herc"))
+    .Promise(t => t.ToList());
+```
+
+The other text predicates can be used the same way.
+
+### Geoshapes
 
 The `Geoshape` class in the `JanusGraph.Net.Geoshapes` namespace can be used to
-construct [Geoshapes][geoshapes].
+construct [Geoshapes][geoshapes]:
+
+```cs
+await g.V().Has("demigod", "name", "hercules").OutE("battled")
+    .Has("place", Geoshape.Point(38.1f, 23.7f)).Count().Promise(t => t.Next());
+```
+
+Only the point Geoshape is supported right now.
+
+### Compatibility
+
+JanusGraph.Net is compatible with JanusGraph versions >= 0.3.0.
 
 ## Community
 
@@ -55,6 +104,7 @@ details about this dual-license structure, please see
 [codacy-url]: https://app.codacy.com/project/JanusGraph/janusgraph-dotnet/dashboard
 [janusgraph]: http://janusgraph.org/
 [gremlin.net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
+[gremlin-chapter]: https://docs.janusgraph.org/latest/gremlin.html
 [text-predicates]: https://docs.janusgraph.org/latest/search-predicates.html#_text_predicate
 [geoshapes]: https://docs.janusgraph.org/latest/search-predicates.html#geoshape
 [janusgraph-community]: https://github.com/JanusGraph/janusgraph#community
