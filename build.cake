@@ -54,6 +54,7 @@ Task("Pack")
 
 Task("Push")
     .DoesForEach(() => NuGetPackages(), (nugetPackage) => {
+        Information($"Pushing {nugetPackage.FullPath}");
         var settings = new DotNetCoreNuGetPushSettings
         {
             ApiKey = apiKey,
