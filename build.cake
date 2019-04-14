@@ -53,14 +53,13 @@ Task("Pack")
     });
 
 Task("Push")
-    .DoesForEach(() => NuGetPackages(), (nugetPackage) => {
-        Information($"Pushing {nugetPackage.FullPath}");
+    .Does(() => {
         var settings = new DotNetCoreNuGetPushSettings
         {
             ApiKey = apiKey,
             Source = nugetSource
         };
-        DotNetCoreNuGetPush(nugetPackage.FullPath, settings);
+        DotNetCoreNuGetPush($"{artifactsDir}/*.nupkg", settings);
     });
 
 Task("Default")
@@ -81,9 +80,4 @@ FilePathCollection TestProjects()
 FilePathCollection SourceProjects()
 {
 	return GetFiles("./src/**/*.csproj");
-}
-
-FilePathCollection NuGetPackages()
-{
-    return GetFiles($"{artifactsDir}/*.nupkg");
 }
