@@ -33,6 +33,7 @@ namespace JanusGraph.Net
         private readonly GremlinServer _server;
         private readonly JanusGraphSONReaderBuilder _readerBuilder = JanusGraphSONReaderBuilder.Build();
         private readonly JanusGraphSONWriterBuilder _writerBuilder = JanusGraphSONWriterBuilder.Build();
+        private ConnectionPoolSettings _connectionPoolSettings;
 
         private JanusGraphClientBuilder(GremlinServer server)
         {
@@ -71,11 +72,22 @@ namespace JanusGraph.Net
         }
 
         /// <summary>
+        ///     Configures the <see cref="ConnectionPoolSettings"/> for the client.
+        /// </summary>
+        /// <param name="connectionPoolSettings">The connection pool settings to use.</param>
+        public JanusGraphClientBuilder WithConnectionPoolSettings(ConnectionPoolSettings connectionPoolSettings)
+        {
+            _connectionPoolSettings = connectionPoolSettings;
+            return this;
+        }
+
+        /// <summary>
         ///     Creates the <see cref="IGremlinClient" /> with the given settings and pre-configured for JanusGraph.
         /// </summary>
         public IGremlinClient Create()
         {
-            return new GremlinClient(_server, _readerBuilder.Create(), _writerBuilder.Create());
+            return new GremlinClient(_server, _readerBuilder.Create(), _writerBuilder.Create(),
+                connectionPoolSettings: _connectionPoolSettings);
         }
     }
 }

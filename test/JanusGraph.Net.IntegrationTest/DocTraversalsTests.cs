@@ -19,9 +19,9 @@
 #endregion
 
 using System;
-using Gremlin.Net.Structure;
 using JanusGraph.Net.Geoshapes;
 using Xunit;
+using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
 namespace JanusGraph.Net.IntegrationTest
 {
@@ -38,7 +38,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Fact]
         public void GremlinNetGettingStartedTest()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
 
             var herculesAge = g.V().Has("name", "hercules").Values<int>("age").Next();
 
@@ -48,7 +48,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Fact]
         public void ReceivingEdgesTest()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             
             var edges = g.V().Has("name","hercules").OutE("battled").ToList();
             
@@ -58,7 +58,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Fact]
         public void TextContainsPredicateTest()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             
             var reasons = g.E().Has("reason", Text.TextContains("loves")).ToList();
             
@@ -68,7 +68,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Fact]
         public void GeoTypesPointsReceivedTest()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             
             var firstBattlePlace = g.V().Has("name", "hercules").OutE("battled").Order().By("time")
                 .Values<Point>("place").Next();
@@ -80,7 +80,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Fact]
         public void GeoTypesPointAsArgumentTest()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             
             g.V().Has("name", "hercules").OutE("battled").Has("place", Geoshape.Point(38.1f, 23.7f)).Next();
         }

@@ -45,14 +45,19 @@ namespace JanusGraph.Net.IntegrationTest
         {
             await base.WaitUntilContainerStarted();
 
+            var result = await Policy.TimeoutAsync(TimeSpan.FromMinutes(2))
+                .WrapAsync(Policy.Handle<WebSocketException>()
+                    .WaitAndRetryForeverAsync(iteration => TimeSpan.FromSeconds(2)))
+                .ExecuteAndCaptureAsync(TryConnectToServerAsync);
+            if (result.Outcome == OutcomeType.Failure)
+                throw new Exception(result.FinalException.Message);
+        }
+
+        private async Task TryConnectToServerAsync()
+        {
             using (var client = new GremlinClient(new GremlinServer(Host, Port)))
             {
-                var result = await Policy.TimeoutAsync(TimeSpan.FromMinutes(2))
-                    .WrapAsync(Policy.Handle<WebSocketException>()
-                        .WaitAndRetryForeverAsync(iteration => TimeSpan.FromSeconds(2)))
-                    .ExecuteAndCaptureAsync(() => client.SubmitAsync("1+1"));
-                if (result.Outcome == OutcomeType.Failure)
-                    throw new Exception(result.FinalException.Message);
+                await client.SubmitAsync("1+1");
             }
         }
     }
