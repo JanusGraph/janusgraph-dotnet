@@ -20,8 +20,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Gremlin.Net.Structure;
 using Xunit;
+using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
 namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
 {
@@ -38,7 +38,7 @@ namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
         [Fact]
         public async Task TraversalWithRelationIdentifierAsEdgeId_ExistingEdgeId_EdgeFound()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             var edgeId = await g.E().Id().Promise(t => t.Next());
             
             var count = await g.E(edgeId).Count().Promise(t => t.Next());
@@ -49,7 +49,7 @@ namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
         [Fact]
         public async Task TraversalWithEdge_ExistingEdge_EdgeFound()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             var edge = await g.E().Promise(t => t.Next());
 
             var count = await g.E(edge).Count().Promise(t => t.Next());

@@ -20,9 +20,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Gremlin.Net.Structure;
 using JanusGraph.Net.Geoshapes;
 using Xunit;
+using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
 namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
 {
@@ -39,7 +39,7 @@ namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
         [Fact]
         public async Task TraversalWithPointPropertyValue_PointReturned_ExpectedPoint()
         {
-            var g = new Graph().Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
 
             var place = await g.V().Has("demigod", "name", "hercules").OutE("battled").Has("time", 1)
                 .Values<Point>("place").Promise(t => t.Next());
