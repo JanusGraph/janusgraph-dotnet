@@ -34,12 +34,14 @@ namespace JanusGraph.Net.IntegrationTest
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var dockerImage = config["dockerImage"];
-            var port = Convert.ToInt32(config["serverPort"]);
             _container = new GenericContainerBuilder<GremlinServerContainer>()
                 .Begin()
                 .WithImage(dockerImage)
-                .WithExposedPorts(port)
+                .WithExposedPorts(GremlinServerContainer.GremlinServerPort)
+                .WithMountPoints(($"{AppContext.BaseDirectory}/load_data.groovy",
+                    "/docker-entrypoint-initdb.d/load_data.groovy", "bind"))
                 .Build();
+            _container.ServerStartedCheckTraversal = "g.V().has('name', 'hercules').hasNext()";
         }
 
         public string Host => _container.Host;
