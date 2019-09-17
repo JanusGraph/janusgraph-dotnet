@@ -19,7 +19,6 @@
 #endregion
 
 using System;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Gremlin.Net.Driver;
@@ -30,34 +29,42 @@ namespace JanusGraph.Net.IntegrationTest
 {
     public class GremlinServerContainer : Container
     {
+        public static readonly int GremlinServerPort = 8182;
+        
         public string Host => GetDockerHostIpAddress();
 
-        public int Port
-        {
-            get
-            {
-                var portBindings = PortBindings?.SingleOrDefault(p => p.ExposedPort == ExposedPorts.First());
-                return portBindings?.PortBinding ?? ExposedPorts.First();
-            }
-        }
+        public int Port => GetMappedPort(GremlinServerPort);
+
+        public string ServerStartedCheckTraversal { get; set; } = "1+1==2";
 
         protected override async Task WaitUntilContainerStarted()
         {
             await base.WaitUntilContainerStarted();
 
             var result = await Policy.TimeoutAsync(TimeSpan.FromMinutes(2))
-                .WrapAsync(Policy.Handle<WebSocketException>()
+                .WrapAsync(Policy
+                    .Handle<WebSocketException>()
+                    .Or<InvalidOperationException>()
                     .WaitAndRetryForeverAsync(iteration => TimeSpan.FromSeconds(2)))
-                .ExecuteAndCaptureAsync(TryConnectToServerAsync);
+                .ExecuteAndCaptureAsync(async () =>
+                {
+                    var serverStarted = await IsServerStartedAsync();
+
+                    if (!serverStarted)
+                    {
+                        throw new InvalidOperationException("Server not fully started yet");
+                    }
+                });
+            
             if (result.Outcome == OutcomeType.Failure)
                 throw new Exception(result.FinalException.Message);
         }
 
-        private async Task TryConnectToServerAsync()
+        private async Task<bool> IsServerStartedAsync()
         {
             using (var client = new GremlinClient(new GremlinServer(Host, Port)))
             {
-                await client.SubmitAsync("1+1");
+                return await client.SubmitWithSingleResultAsync<bool>(ServerStartedCheckTraversal);
             }
         }
     }

@@ -38,11 +38,10 @@ namespace JanusGraph.Net.IntegrationTest
             _port = port;
         }
 
-        public IRemoteConnection CreateRemoteConnection(string traversalSource = "gods_traversal")
+        public IRemoteConnection CreateRemoteConnection()
         {
-            var c = new DriverRemoteConnection(
-                JanusGraphClientBuilder.BuildClientForServer(new GremlinServer(_host, _port)).Create(),
-                traversalSource);
+            var c = new DriverRemoteConnection(JanusGraphClientBuilder
+                .BuildClientForServer(new GremlinServer(_host, _port)).Create());
             _connections.Add(c);
             return c;
         }
