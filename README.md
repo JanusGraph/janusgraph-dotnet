@@ -102,10 +102,10 @@ details about this dual-license structure, please see
 [travis-url]: https://travis-ci.org/JanusGraph/janusgraph-dotnet
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/eb69004e41f64f03be82228e6faaedd1
 [codacy-url]: https://app.codacy.com/project/JanusGraph/janusgraph-dotnet/dashboard
-[janusgraph]: http://janusgraph.org/
+[janusgraph]: https://janusgraph.org/
 [gremlin.net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
-[gremlin-chapter]: https://docs.janusgraph.org/latest/gremlin.html
-[text-predicates]: https://docs.janusgraph.org/latest/search-predicates.html#_text_predicate
-[geoshapes]: https://docs.janusgraph.org/latest/search-predicates.html#geoshape
+[gremlin-chapter]: https://docs.janusgraph.org/basics/gremlin/
+[text-predicates]: https://docs.janusgraph.org/index-backend/search-predicates/#text-predicate
+[geoshapes]: https://docs.janusgraph.org/index-backend/search-predicates/#geoshape-data-type
 [janusgraph-community]: https://github.com/JanusGraph/janusgraph#community
 [janusgraph-contributing]: https://github.com/JanusGraph/janusgraph/blob/master/CONTRIBUTING.md
