@@ -18,9 +18,12 @@
     <PackageProjectUrl>http://janusgraph.org/</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/JanusGraph/janusgraph-dotnet</RepositoryUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/JanusGraph/logos/master/RGB%20-%20PNG%20small/JanusGraph%20logomark%20color%20RGB.png</PackageIconUrl>
+    <PackageIcon>JanusGraph logomark color RGB.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Gremlin.Net" Version="3.4.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\JanusGraph logomark color RGB.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>
