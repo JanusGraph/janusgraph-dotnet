@@ -17,8 +17,8 @@ mono: none
 os:
   - linux
 sudo: enabled
-dist: trusty
-dotnet: 2.1
+dist: xenial
+dotnet: 2.2
 services:
   - docker
 before_install:
