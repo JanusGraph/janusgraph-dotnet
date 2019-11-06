@@ -71,9 +71,22 @@ await g.V().Has("demigod", "name", "hercules").OutE("battled")
 
 Only the point Geoshape is supported right now.
 
-### Compatibility
+## Version Compatibility
 
-JanusGraph.Net is compatible with JanusGraph versions >= 0.3.0.
+The lowest supported JanusGraph version is 0.3.0.
+The following table shows the supported JanusGraph versions for each version
+of JanusGraph.Net:
+
+| JanusGraph.Net | JanusGraph |
+|---|---|
+| 0.1.z | 0.3.z |
+| 0.2.z _(unreleased)_ | 0.4.z |
+
+While it should also be possible to use JanusGraph.Net with other versions of
+JanusGraph than mentioned here, compatibility is not tested and some
+functionality (like added Gremlin steps) will not work as it is not supported
+yet in case of an older JanusGraph version or was removed in a newer JanusGraph
+version.
 
 ## Community
 
