@@ -80,7 +80,7 @@ of JanusGraph.Net:
 | JanusGraph.Net | JanusGraph |
 |---|---|
 | 0.1.z | 0.3.z |
-| 0.2.z _(unreleased)_ | 0.4.z |
+| 0.2.z | 0.4.z |
 
 While it should also be possible to use JanusGraph.Net with other versions of
 JanusGraph than mentioned here, compatibility is not tested and some
