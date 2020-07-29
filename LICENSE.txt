@@ -6,10 +6,11 @@ The JanusGraph project uses the following two licenses:
   which can be found in the file CC-BY-4.0.txt in the root of this repository,
   and included below
 
-The JanusGraph .NET driver is distributed under the following licenses:
+The JanusGraph .NET driver is distributed under the following licenses, and
+contributions are accepted accordingly:
 
-* APACHE-2.0 license for code contributions, including code samples in docs
-* CC-BY-4.0 license for documentation contributions
+* APACHE-2.0 license for code, including code samples in docs
+* CC-BY-4.0 license for documentation
 
 For convenience, copies of APACHE-2.0 and CC-BY-4.0 are included verbatim below.
 
