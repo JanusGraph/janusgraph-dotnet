@@ -32,21 +32,23 @@ namespace JanusGraph.Net
     {
         private readonly GremlinServer _server;
         private readonly JanusGraphSONReaderBuilder _readerBuilder = JanusGraphSONReaderBuilder.Build();
-        private readonly JanusGraphSONWriterBuilder _writerBuilder = JanusGraphSONWriterBuilder.Build();
+        private readonly JanusGraphSONWriterBuilder _writerBuilder;
         private ConnectionPoolSettings _connectionPoolSettings;
 
-        private JanusGraphClientBuilder(GremlinServer server)
+        private JanusGraphClientBuilder(GremlinServer server, bool janusGraphPredicates)
         {
             _server = server;
+            _writerBuilder = JanusGraphSONWriterBuilder.Build(janusGraphPredicates);
         }
 
         /// <summary>
         ///     Initializes a <see cref="JanusGraphClientBuilder" /> for the given <see cref="GremlinServer" />.
         /// </summary>
         /// <param name="server">The <see cref="GremlinServer" /> requests should be sent to.</param>
-        public static JanusGraphClientBuilder BuildClientForServer(GremlinServer server)
+        /// <param name="janusGraphPredicates">This value should be true for JanusGraph-server of version 0.6 and above.</param>
+        public static JanusGraphClientBuilder BuildClientForServer(GremlinServer server, bool janusGraphPredicates = false)
         {
-            return new JanusGraphClientBuilder(server);
+            return new JanusGraphClientBuilder(server, janusGraphPredicates);
         }
 
         /// <summary>
