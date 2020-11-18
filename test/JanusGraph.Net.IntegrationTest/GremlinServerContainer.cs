@@ -21,13 +21,17 @@
 using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
+using Docker.DotNet;
 using Gremlin.Net.Driver;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Polly;
-using TestContainers.Core.Containers;
+using TestContainers.Container.Abstractions;
+using TestContainers.Container.Abstractions.Images;
 
 namespace JanusGraph.Net.IntegrationTest
 {
-    public class GremlinServerContainer : Container
+    public class GremlinServerContainer : GenericContainer
     {
         public static readonly int GremlinServerPort = 8182;
         
@@ -37,10 +41,21 @@ namespace JanusGraph.Net.IntegrationTest
 
         public string ServerStartedCheckTraversal { get; set; } = "1+1==2";
 
-        protected override async Task WaitUntilContainerStarted()
+        /// <inheritdoc />
+        public GremlinServerContainer(string dockerImageName, IDockerClient dockerClient, ILoggerFactory loggerFactory)
+            : base(dockerImageName, dockerClient, loggerFactory)
         {
-            await base.WaitUntilContainerStarted();
+        }
 
+        /// <inheritdoc />
+        [ActivatorUtilitiesConstructor]
+        public GremlinServerContainer(IImage dockerImage, IDockerClient dockerClient, ILoggerFactory loggerFactory)
+            : base(dockerImage, dockerClient, loggerFactory)
+        {
+        }
+        
+        protected override async Task ContainerStarted()
+        {
             var result = await Policy.TimeoutAsync(TimeSpan.FromMinutes(2))
                 .WrapAsync(Policy
                     .Handle<WebSocketException>()
@@ -62,10 +77,8 @@ namespace JanusGraph.Net.IntegrationTest
 
         private async Task<bool> IsServerStartedAsync()
         {
-            using (var client = new GremlinClient(new GremlinServer(Host, Port)))
-            {
-                return await client.SubmitWithSingleResultAsync<bool>(ServerStartedCheckTraversal);
-            }
+            using var client = new GremlinClient(new GremlinServer(Host, Port));
+            return await client.SubmitWithSingleResultAsync<bool>(ServerStartedCheckTraversal);
         }
     }
 }

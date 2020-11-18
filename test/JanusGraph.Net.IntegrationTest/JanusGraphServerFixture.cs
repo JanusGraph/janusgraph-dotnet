@@ -21,7 +21,9 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using TestContainers.Core.Builders;
+using Microsoft.Extensions.Logging;
+using TestContainers.Container.Abstractions.Hosting;
+using TestContainers.Container.Abstractions.Models;
 using Xunit;
 
 namespace JanusGraph.Net.IntegrationTest
@@ -34,12 +36,24 @@ namespace JanusGraph.Net.IntegrationTest
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var dockerImage = config["dockerImage"];
-            _container = new GenericContainerBuilder<GremlinServerContainer>()
-                .Begin()
-                .WithImage(dockerImage)
-                .WithExposedPorts(GremlinServerContainer.GremlinServerPort)
-                .WithMountPoints(($"{AppContext.BaseDirectory}/load_data.groovy",
-                    "/docker-entrypoint-initdb.d/load_data.groovy", "bind"))
+            _container = new ContainerBuilder<GremlinServerContainer>()
+                .ConfigureDockerImageName(dockerImage)
+                .ConfigureLogging(builder =>
+                {
+                    builder.AddConsole();
+                    builder.SetMinimumLevel(LogLevel.Debug);
+                })
+                .ConfigureContainer((context, container) =>
+                {
+                    container.ExposedPorts.Add(GremlinServerContainer.GremlinServerPort);
+
+                    container.BindMounts.Add(new Bind
+                    {
+                        HostPath = $"{AppContext.BaseDirectory}/load_data.groovy",
+                        ContainerPath = "/docker-entrypoint-initdb.d/load_data.groovy",
+                        AccessMode = AccessMode.ReadOnly
+                    });
+                })
                 .Build();
             _container.ServerStartedCheckTraversal = "g.V().has('name', 'hercules').hasNext()";
         }
@@ -49,12 +63,12 @@ namespace JanusGraph.Net.IntegrationTest
 
         public Task InitializeAsync()
         {
-            return _container.Start();
+            return _container.StartAsync();
         }
 
         public Task DisposeAsync()
         {
-            return _container.Stop();
+            return _container.StopAsync();
         }
     }
 }
