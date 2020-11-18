@@ -31,23 +31,26 @@ namespace JanusGraph.Net.IO.GraphSON
     /// </summary>
     public class JanusGraphSONWriterBuilder
     {
-        private readonly Dictionary<Type, IGraphSONSerializer> _serializerByType =
-            new Dictionary<Type, IGraphSONSerializer>
+        private bool _janusGraphPredicates = false;
+        private readonly Dictionary<Type, IGraphSONSerializer> _serializerByType;
+
+        private JanusGraphSONWriterBuilder(bool janusGraphPredicates)
+        {
+            _janusGraphPredicates = janusGraphPredicates;
+            _serializerByType = new Dictionary<Type, IGraphSONSerializer>
             {
                 {typeof(Point), new PointSerializer()},
-                {typeof(RelationIdentifier), new RelationIdentifierSerializer()}
+                {typeof(RelationIdentifier), new RelationIdentifierSerializer()},
+                {typeof(JanusGraphP), new JanusGraphPSerializer(_janusGraphPredicates)},
             };
-
-        private JanusGraphSONWriterBuilder()
-        {
         }
 
         /// <summary>
         ///     Initializes a <see cref="JanusGraphSONWriterBuilder" />.
         /// </summary>
-        public static JanusGraphSONWriterBuilder Build()
+        public static JanusGraphSONWriterBuilder Build(bool janusGraphPredicates = false)
         {
-            return new JanusGraphSONWriterBuilder();
+            return new JanusGraphSONWriterBuilder(janusGraphPredicates);
         }
 
         /// <summary>
