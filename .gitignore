@@ -3,10 +3,6 @@
 [Oo]bj/
 artifacts/
 
-# Cake
-tools/*
-!tools/cake_version
-
 # Visual Studio
 .vs/
 
