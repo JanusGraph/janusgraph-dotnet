@@ -5,7 +5,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>	
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <Version>0.2.2</Version>
     <Title>JanusGraph.Net</Title>
     <Authors>JanusGraph</Authors>

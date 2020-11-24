@@ -34,7 +34,7 @@ namespace JanusGraph.Net.IntegrationTest
         {
             _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
         }
-        
+
         [Fact]
         public void GremlinNetGettingStartedTest()
         {
@@ -49,9 +49,9 @@ namespace JanusGraph.Net.IntegrationTest
         public void ReceivingEdgesTest()
         {
             var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
-            
-            var edges = g.V().Has("name","hercules").OutE("battled").ToList();
-            
+
+            var edges = g.V().Has("name", "hercules").OutE("battled").ToList();
+
             Assert.Equal(3, edges.Count);
         }
 
@@ -59,9 +59,9 @@ namespace JanusGraph.Net.IntegrationTest
         public void TextContainsPredicateTest()
         {
             var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
-            
+
             var reasons = g.E().Has("reason", Text.TextContains("loves")).ToList();
-            
+
             Assert.Equal(2, reasons.Count);
         }
 
@@ -69,10 +69,10 @@ namespace JanusGraph.Net.IntegrationTest
         public void GeoTypesPointsReceivedTest()
         {
             var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
-            
+
             var firstBattlePlace = g.V().Has("name", "hercules").OutE("battled").Order().By("time")
                 .Values<Point>("place").Next();
-            
+
             Assert.Equal(38.1f, firstBattlePlace.Latitude, 3);
             Assert.Equal(23.7f, firstBattlePlace.Longitude, 3);
         }
@@ -81,7 +81,7 @@ namespace JanusGraph.Net.IntegrationTest
         public void GeoTypesPointAsArgumentTest()
         {
             var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
-            
+
             g.V().Has("name", "hercules").OutE("battled").Has("place", Geoshape.Point(38.1f, 23.7f)).Next();
         }
 

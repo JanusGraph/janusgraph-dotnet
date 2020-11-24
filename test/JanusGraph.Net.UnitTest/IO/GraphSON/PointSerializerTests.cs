@@ -38,8 +38,8 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
             var graphSon = writer.WriteObject(point);
 
             var expectedGraphSon = "{\"@type\":\"janusgraph:Geoshape\",\"@value\":{\"coordinates\":[" +
-                                   longitude.ToString(CultureInfo.InvariantCulture) + "," +
-                                   latitude.ToString(CultureInfo.InvariantCulture) + "]}}";
+                                    longitude.ToString(CultureInfo.InvariantCulture) + "," +
+                                    latitude.ToString(CultureInfo.InvariantCulture) + "]}}";
             Assert.Equal(expectedGraphSon, graphSon);
         }
     }

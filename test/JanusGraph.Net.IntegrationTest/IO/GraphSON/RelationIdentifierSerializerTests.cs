@@ -34,18 +34,18 @@ namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
         {
             _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
         }
-        
+
         [Fact]
         public async Task TraversalWithRelationIdentifierAsEdgeId_ExistingEdgeId_EdgeFound()
         {
             var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
             var edgeId = await g.E().Id().Promise(t => t.Next());
-            
+
             var count = await g.E(edgeId).Count().Promise(t => t.Next());
 
             Assert.Equal(1, count);
         }
-        
+
         [Fact]
         public async Task TraversalWithEdge_ExistingEdge_EdgeFound()
         {

@@ -1,4 +1,4 @@
-# Copyright 2019 JanusGraph.Net authors
+# Copyright 2020 JanusGraph Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,23 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-root = true
-
-[*]
-charset = utf-8
-indent_style = space
-end_of_line = lf
-insert_final_newline = true
-trim_trailing_whitespace = true
-
-[*.cs]
-indent_size = 4
-insert_final_newline = false
-
-[*.csproj]
-indent_size = 2
-insert_final_newline = false
-
-[*.json]
-indent_size = 2
-insert_final_newline = false
+\.gitignore, Apache-2.0
+README.md, Apache-2.0
+BUILDING.md, Apache-2.0
+AUTHORS.txt, Apache-2.0
+DCO.txt, Apache-2.0
+.csproj, Apache-2.0
+CC-BY-4.0.txt, Apache-2.0
+JanusGraph.Net.sln, Apache-2.0
+JanusGraph logomark color RGB.png, Apache-2.0
+CONTRIBUTORS.txt, Apache-2.0
+appsettings.json, Apache-2.0
