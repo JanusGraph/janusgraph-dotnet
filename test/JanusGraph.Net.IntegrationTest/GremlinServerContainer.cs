@@ -34,7 +34,7 @@ namespace JanusGraph.Net.IntegrationTest
     public class GremlinServerContainer : GenericContainer
     {
         public static readonly int GremlinServerPort = 8182;
-        
+
         public string Host => GetDockerHostIpAddress();
 
         public int Port => GetMappedPort(GremlinServerPort);
@@ -53,7 +53,7 @@ namespace JanusGraph.Net.IntegrationTest
             : base(dockerImage, dockerClient, loggerFactory)
         {
         }
-        
+
         protected override async Task ContainerStarted()
         {
             var result = await Policy.TimeoutAsync(TimeSpan.FromMinutes(2))
@@ -70,7 +70,7 @@ namespace JanusGraph.Net.IntegrationTest
                         throw new InvalidOperationException("Server not fully started yet");
                     }
                 });
-            
+
             if (result.Outcome == OutcomeType.Failure)
                 throw new Exception(result.FinalException.Message);
         }

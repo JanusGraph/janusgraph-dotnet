@@ -39,7 +39,7 @@ namespace JanusGraph.Net.UnitTest.Geoshapes
         {
             Assert.Throws<ArgumentException>(() => Geoshape.Point(latitude, longitude));
         }
-        
+
         [Theory]
         [InlineData(0, 0)]
         [InlineData(90, 0)]
@@ -55,7 +55,7 @@ namespace JanusGraph.Net.UnitTest.Geoshapes
         public void Point_ValidCoordinates_PointWithGivenCoordinates(double latitude, double longitude)
         {
             var point = Geoshape.Point(latitude, longitude);
-            
+
             Assert.Equal(latitude, point.Latitude);
             Assert.Equal(longitude, point.Longitude);
         }

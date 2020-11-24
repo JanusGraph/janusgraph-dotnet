@@ -35,7 +35,7 @@ namespace JanusGraph.Net.IntegrationTest
         {
             _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
         }
-        
+
         [Theory]
         [InlineData("loves", 2)]
         [InlineData("shouldNotBeFound", 0)]
@@ -47,7 +47,7 @@ namespace JanusGraph.Net.IntegrationTest
 
             Assert.Equal(expectedCount, count);
         }
-        
+
         [Theory]
         [InlineData("wave", 1)]
         [InlineData("f", 2)]
@@ -60,7 +60,7 @@ namespace JanusGraph.Net.IntegrationTest
 
             Assert.Equal(expectedCount, count);
         }
-        
+
         [Theory]
         [InlineData(".*ave.*", 1)]
         [InlineData("f.{3,4}", 2)]
@@ -73,7 +73,7 @@ namespace JanusGraph.Net.IntegrationTest
 
             Assert.Equal(expectedCount, count);
         }
-        
+
         [Theory]
         [InlineData("waxes", 1)]
         [InlineData("shouldNotBeFound", 0)]
@@ -85,7 +85,7 @@ namespace JanusGraph.Net.IntegrationTest
 
             Assert.Equal(expectedCount, count);
         }
-        
+
         [Theory]
         [InlineData("herc", 1)]
         [InlineData("s", 3)]
@@ -98,7 +98,7 @@ namespace JanusGraph.Net.IntegrationTest
 
             Assert.Equal(expectedCount, count);
         }
-        
+
         [Theory]
         [InlineData(".*rcule.*", 1)]
         [InlineData("s.{2}", 2)]
@@ -111,7 +111,7 @@ namespace JanusGraph.Net.IntegrationTest
 
             Assert.Equal(expectedCount, count);
         }
-        
+
         [Theory]
         [InlineData("herculex", 1)]
         [InlineData("ska", 2)]

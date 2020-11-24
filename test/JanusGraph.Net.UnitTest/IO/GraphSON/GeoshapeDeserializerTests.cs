@@ -35,8 +35,8 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         public void Read_GraphSonPointWithGivenCoordinates_ExpectedPoint(double latitude, double longitude)
         {
             var graphSon = "{\"@type\":\"janusgraph:Geoshape\",\"@value\":{\"coordinates\":[" +
-                           longitude.ToString(CultureInfo.InvariantCulture) + "," +
-                           latitude.ToString(CultureInfo.InvariantCulture) + "]}}";
+                            longitude.ToString(CultureInfo.InvariantCulture) + "," +
+                            latitude.ToString(CultureInfo.InvariantCulture) + "]}}";
             var reader = JanusGraphSONReaderBuilder.Build().Create();
 
             var readPoint = reader.ToObject(JToken.Parse(graphSon));

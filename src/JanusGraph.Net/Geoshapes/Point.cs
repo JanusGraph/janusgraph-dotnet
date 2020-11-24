@@ -48,7 +48,7 @@ namespace JanusGraph.Net.Geoshapes
         ///     Gets the coordinates of this point in the form: [longitude, latitude].
         /// </summary>
         public double[] Coordinates => new[] {Longitude, Latitude};
-        
+
         /// <inheritdoc />
         public bool Equals(Point other)
         {
