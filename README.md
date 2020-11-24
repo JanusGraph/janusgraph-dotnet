@@ -4,8 +4,9 @@ JanusGraph.Net is the .NET driver of [JanusGraph][janusgraph]. It extends
 Apache TinkerPop™'s [Gremlin.Net][gremlin.net] as its core dependency
 with additional support for JanusGraph-specific types.
 
-[![Build Status][travis-badge]][travis-url]
+[![GitHub Workflow Status][actions-badge]][actions-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
+[![Nuget][nuget-badge]][nuget-url]
 
 ## Usage
 
@@ -111,10 +112,12 @@ and documentation is provided under the [CC-BY-4.0 license](CC-BY-4.0.txt). For
 details about this dual-license structure, please see
 [`LICENSE.txt`](LICENSE.txt).
 
-[travis-badge]: https://travis-ci.org/JanusGraph/janusgraph-dotnet.svg?branch=master
-[travis-url]: https://travis-ci.org/JanusGraph/janusgraph-dotnet
 [codacy-badge]: https://api.codacy.com/project/badge/Grade/eb69004e41f64f03be82228e6faaedd1
 [codacy-url]: https://app.codacy.com/project/JanusGraph/janusgraph-dotnet/dashboard
+[nuget-badge]: https://img.shields.io/nuget/v/JanusGraph.NET
+[nuget-url]: https://www.nuget.org/packages/JanusGraph.NET/
+[actions-badge]: https://img.shields.io/github/workflow/status/JanusGraph/janusgraph-dotnet/.NET
+[actions-url]: https://github.com/JanusGraph/janusgraph-dotnet/actions
 [janusgraph]: https://janusgraph.org/
 [gremlin.net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
 [gremlin-chapter]: https://docs.janusgraph.org/basics/gremlin/

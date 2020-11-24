@@ -1,40 +1,29 @@
 # Building JanusGraph.Net
 
-JanusGraph.Net uses [Cake][cake] for build automation to get
-deterministic builds across platforms.
+JanusGraph.Net uses dotnet build for convenient builds across platforms.
 
 ## Requirements
 
 * [.NET Core SDK (version >= 2.1.400)][dotnet-sdk] is needed to build and test the project.
 * [Docker][docker] needs to be running in order to execute the integration tests as they automatically start a JanusGraph Docker container.
 
-## Cake Build Script
+## Build
 
-To execute the Cake build script, the Cake .NET CLI tool needs to be installed:
-
-```sh
-dotnet tool install -g Cake.Tool
-```
-
-Afterwards, the library can be built by executing:
+The library can be tested by executing:
 
 ```sh
-dotnet cake
+dotnet test JanusGraph.NET.sln
 ```
 
-By default, the script builds and tests the library.
-Other tasks can be executed by specifying them as targets:
+The library can be packed into NuGet package by executing:
 
 ```sh
-dotnet cake --target=Pack
+dotnet pack -v minimal -c Release -o ./artifacts JanusGraph.NET.sln
 ```
-
-The shown `Pack` task packs the library into a NuGet package after building and
-testing it.
 
 ## Deployment
 
-We use continuous deployment via Travis to push NuGet packages to nuget.org.
+We use continuous deployment via GitHub Actions to push NuGet packages to nuget.org.
 To create a new release, you only have to create a [git tag][git-tag] for the
 release:
 
@@ -48,12 +37,11 @@ and then push this tag:
 git push origin v0.1.0
 ```
 
-This will trigger a deployment via Travis after the usual build has completed
+This will trigger a deployment via Github Actions after the usual build has completed
 successfully.
 The version number used for the tag should correspond to the version in the
 `.csproj` file as that version is used for the NuGet package.
 
-[cake]: https://cakebuild.net/
 [dotnet-sdk]: https://www.microsoft.com/net/download
 [docker]: https://www.docker.com/
 [git-tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
