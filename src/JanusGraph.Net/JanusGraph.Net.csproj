@@ -25,7 +25,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0 " PrivateAssets="All"/>
-    <PackageReference Include="Gremlin.Net" Version="3.4.6" />
+    <PackageReference Include="Gremlin.Net" Version="3.4.10" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\JanusGraph logomark color RGB.png" Pack="true" PackagePath="\"/>
