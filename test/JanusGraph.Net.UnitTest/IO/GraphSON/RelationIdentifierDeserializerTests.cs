@@ -18,8 +18,8 @@
 
 #endregion
 
+using System.Text.Json;
 using JanusGraph.Net.IO.GraphSON;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace JanusGraph.Net.UnitTest.IO.GraphSON
@@ -33,7 +33,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
                 "{\"@type\":\"janusgraph:RelationIdentifier\",\"@value\":{\"relationId\":\"3k1-360-6c5-39c\"}}";
             var reader = JanusGraphSONReaderBuilder.Build().Create();
 
-            var readRelationIdentifier = reader.ToObject(JToken.Parse(graphSon));
+            var readRelationIdentifier = reader.ToObject(JsonDocument.Parse(graphSon).RootElement);
 
             var expectedRelationIdentifier = new RelationIdentifier("3k1-360-6c5-39c");
             Assert.Equal(expectedRelationIdentifier, readRelationIdentifier);

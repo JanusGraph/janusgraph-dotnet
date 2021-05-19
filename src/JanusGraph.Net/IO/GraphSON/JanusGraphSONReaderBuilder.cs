@@ -64,7 +64,7 @@ namespace JanusGraph.Net.IO.GraphSON
         ///     Creates a <see cref="GraphSONReader" /> with the registered deserializers as well as the default JanusGraph
         ///     deserializers.
         /// </summary>
-        public GraphSONReader Create()
+        public GraphSON3Reader Create()
         {
             return new GraphSON3Reader(_deserializerByGraphSONType);
         }

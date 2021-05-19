@@ -21,25 +21,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using Gremlin.Net.Structure.IO.GraphSON;
 using JanusGraph.Net.Geoshapes;
-using Newtonsoft.Json.Linq;
 
 namespace JanusGraph.Net.IO.GraphSON
 {
     internal class GeoshapeDeserializer : IGraphSONDeserializer
     {
-        public dynamic Objectify(JToken graphsonObject, GraphSONReader reader)
+        public dynamic Objectify(JsonElement graphsonObject, GraphSONReader reader)
         {
-            if (graphsonObject["coordinates"] != null)
-                return DeserializePointFromCoordinates(graphsonObject["coordinates"]);
-            var geometryData = graphsonObject["geometry"];
-            throw new InvalidOperationException($"Deserialization of type {geometryData["type"]} is not supported.");
+            if (graphsonObject.TryGetProperty("coordinates", out var coordinatesProperty))
+            {
+                return DeserializePointFromCoordinates(coordinatesProperty);
+            }
+            var geometryData = graphsonObject.GetProperty("geometry");
+            throw new InvalidOperationException(
+                $"Deserialization of type {geometryData.GetProperty("type").GetString()} is not supported.");
         }
 
-        private static Point DeserializePointFromCoordinates(JToken coordinates)
+        private static Point DeserializePointFromCoordinates(JsonElement coordinates)
         {
-            var coordArr = coordinates.Select(c => c.ToObject<double>()).ToArray();
+            var coordArr = coordinates.EnumerateArray().Select(c => c.GetDouble()).ToArray();
             return PointFromCoordinates(coordArr);
         }
 

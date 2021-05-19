@@ -65,7 +65,7 @@ namespace JanusGraph.Net.IO.GraphSON
         ///     Creates a <see cref="GraphSONWriter" /> with the registered serializers as well as the default JanusGraph
         ///     serializers.
         /// </summary>
-        public GraphSONWriter Create()
+        public GraphSON3Writer Create()
         {
             return new GraphSON3Writer(_serializerByType);
         }

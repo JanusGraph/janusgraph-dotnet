@@ -19,10 +19,10 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Text.Json;
 using Gremlin.Net.Structure.IO.GraphSON;
 using JanusGraph.Net.Geoshapes;
 using JanusGraph.Net.IO.GraphSON;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace JanusGraph.Net.UnitTest.IO.GraphSON
@@ -56,7 +56,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
 
         private class SerializerFake : IGraphSONSerializer
         {
-            public string DeserializationResult => JsonConvert.SerializeObject(_typedValue);
+            public string DeserializationResult => JsonSerializer.Serialize(_typedValue);
             private readonly Dictionary<string, dynamic> _typedValue;
 
             private SerializerFake(string graphSonType, object valueToReturn)
@@ -66,7 +66,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
 
             public static SerializerFake Register(string graphSonType, object valueToReturn)
             {
-                return new SerializerFake(graphSonType, valueToReturn);
+                return new(graphSonType, valueToReturn);
             }
 
             public Dictionary<string, dynamic> Dictify(dynamic objectData, GraphSONWriter writer)
