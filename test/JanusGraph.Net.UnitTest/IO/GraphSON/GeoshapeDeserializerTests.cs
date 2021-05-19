@@ -20,9 +20,9 @@
 
 using System;
 using System.Globalization;
+using System.Text.Json;
 using JanusGraph.Net.Geoshapes;
 using JanusGraph.Net.IO.GraphSON;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace JanusGraph.Net.UnitTest.IO.GraphSON
@@ -39,7 +39,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
                             latitude.ToString(CultureInfo.InvariantCulture) + "]}}";
             var reader = JanusGraphSONReaderBuilder.Build().Create();
 
-            var readPoint = reader.ToObject(JToken.Parse(graphSon));
+            var readPoint = reader.ToObject(JsonDocument.Parse(graphSon).RootElement);
 
             var expectedPoint = Geoshape.Point(latitude, longitude);
             Assert.Equal(expectedPoint, readPoint);
@@ -52,7 +52,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
                 "{\"@type\":\"janusgraph:Geoshape\",\"@value\":{\"geometry\":{\"type\":\"Unknown\"}}}";
             var reader = JanusGraphSONReaderBuilder.Build().Create();
 
-            Assert.Throws<InvalidOperationException>(() => reader.ToObject(JToken.Parse(graphSon)));
+            Assert.Throws<InvalidOperationException>(() => reader.ToObject(JsonDocument.Parse(graphSon).RootElement));
         }
     }
 }

@@ -18,9 +18,9 @@
 
 #endregion
 
+using System.Text.Json;
 using Gremlin.Net.Structure.IO.GraphSON;
 using JanusGraph.Net.IO.GraphSON;
-using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace JanusGraph.Net.UnitTest.IO.GraphSON
@@ -39,14 +39,14 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
 
             var reader = JanusGraphSONReaderBuilder.Build().RegisterDeserializer(graphSONType, customDeserializer).Create();
 
-            Assert.Equal(deserializationResult, reader.ToObject(JToken.Parse(graphSon)));
+            Assert.Equal(deserializationResult, reader.ToObject(JsonDocument.Parse(graphSon).RootElement));
         }
 
         private class DeserializerFake : IGraphSONDeserializer
         {
             public object DeserializationResult { get; set; }
 
-            public dynamic Objectify(JToken graphsonObject, GraphSONReader reader)
+            public dynamic Objectify(JsonElement graphsonObject, GraphSONReader reader)
             {
                 return DeserializationResult;
             }

@@ -86,8 +86,9 @@ namespace JanusGraph.Net
         /// </summary>
         public IGremlinClient Create()
         {
-            return new GremlinClient(_server, _readerBuilder.Create(), _writerBuilder.Create(),
-                connectionPoolSettings: _connectionPoolSettings);
+            return new GremlinClient(_server,
+                new GraphSON3MessageSerializer(_readerBuilder.Create(), _writerBuilder.Create()),
+                _connectionPoolSettings);
         }
     }
 }

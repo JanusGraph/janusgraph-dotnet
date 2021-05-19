@@ -8,3 +8,4 @@ artifacts/
 
 # JetBrains Rider
 .idea/
+*.user

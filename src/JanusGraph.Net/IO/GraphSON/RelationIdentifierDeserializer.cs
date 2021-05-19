@@ -18,16 +18,16 @@
 
 #endregion
 
+using System.Text.Json;
 using Gremlin.Net.Structure.IO.GraphSON;
-using Newtonsoft.Json.Linq;
 
 namespace JanusGraph.Net.IO.GraphSON
 {
     internal class RelationIdentifierDeserializer : IGraphSONDeserializer
     {
-        public dynamic Objectify(JToken graphsonObject, GraphSONReader reader)
+        public dynamic Objectify(JsonElement graphsonObject, GraphSONReader reader)
         {
-            return new RelationIdentifier((string) graphsonObject["relationId"]);
+            return new RelationIdentifier(graphsonObject.GetProperty("relationId").GetString());
         }
     }
 }
