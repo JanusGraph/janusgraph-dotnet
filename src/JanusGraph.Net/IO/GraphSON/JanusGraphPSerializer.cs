@@ -25,13 +25,6 @@ namespace JanusGraph.Net.IO.GraphSON
 {
     internal class JanusGraphPSerializer : IGraphSONSerializer
     {
-        private bool _janusGraphPredicates;
-
-        public JanusGraphPSerializer(bool janusGraphPredicates)
-        {
-            _janusGraphPredicates = janusGraphPredicates;
-        }
-        
         public Dictionary<string, dynamic> Dictify(dynamic objectData, GraphSONWriter writer)
         {
             var p = (JanusGraphP) objectData;
@@ -44,7 +37,7 @@ namespace JanusGraph.Net.IO.GraphSON
                 {"predicate", p.OperatorName},
                 {"value", value}
             };
-            return GraphSONUtil.ToTypedValue(_janusGraphPredicates ? "JanusGraphP" : "P", dict, _janusGraphPredicates ? "janusgraph" : "g");
+            return GraphSONUtil.ToTypedValue("JanusGraphP", dict, "janusgraph");
         }
     }
 }
