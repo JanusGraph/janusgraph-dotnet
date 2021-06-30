@@ -31,24 +31,38 @@ namespace JanusGraph.Net.IO.GraphSON
     /// </summary>
     public class JanusGraphSONWriterBuilder
     {
-        private bool _janusGraphPredicates = false;
         private readonly Dictionary<Type, IGraphSONSerializer> _serializerByType;
 
         private JanusGraphSONWriterBuilder(bool janusGraphPredicates)
         {
-            _janusGraphPredicates = janusGraphPredicates;
             _serializerByType = new Dictionary<Type, IGraphSONSerializer>
             {
                 {typeof(Point), new PointSerializer()},
                 {typeof(RelationIdentifier), new RelationIdentifierSerializer()},
-                {typeof(JanusGraphP), new JanusGraphPSerializer(_janusGraphPredicates)},
             };
+            if (janusGraphPredicates)
+            {
+                _serializerByType.Add(typeof(JanusGraphP), new JanusGraphPSerializer());
+            }
         }
 
         /// <summary>
         ///     Initializes a <see cref="JanusGraphSONWriterBuilder" />.
         /// </summary>
-        public static JanusGraphSONWriterBuilder Build(bool janusGraphPredicates = false)
+        public static JanusGraphSONWriterBuilder Build()
+        {
+            return new JanusGraphSONWriterBuilder(false);
+        }
+
+        /// <summary>
+        ///     Initializes a <see cref="JanusGraphSONWriterBuilder" />.
+        /// </summary>
+        /// <param name="janusGraphPredicates">
+        ///     This value activates support for JanusGraph predicate serialization added in
+        ///     JanusGraph 0.6.0. It should be set to true for JanusGraph Server versions >= 0.6.0 and to false for versions before
+        ///     0.6.0.
+        /// </param>
+        public static JanusGraphSONWriterBuilder Build(bool janusGraphPredicates)
         {
             return new JanusGraphSONWriterBuilder(janusGraphPredicates);
         }
