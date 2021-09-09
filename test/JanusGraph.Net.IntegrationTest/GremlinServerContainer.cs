@@ -77,8 +77,15 @@ namespace JanusGraph.Net.IntegrationTest
 
         private async Task<bool> IsServerStartedAsync()
         {
-            using var client = new GremlinClient(new GremlinServer(Host, Port));
-            return await client.SubmitWithSingleResultAsync<bool>(ServerStartedCheckTraversal);
+            try
+            {
+                using var client = new GremlinClient(new GremlinServer(Host, Port));
+                return await client.SubmitWithSingleResultAsync<bool>(ServerStartedCheckTraversal);
+            }
+            catch (AggregateException e) when(e.InnerException != null)
+            {
+                throw e.InnerException;
+            }
         }
     }
 }
