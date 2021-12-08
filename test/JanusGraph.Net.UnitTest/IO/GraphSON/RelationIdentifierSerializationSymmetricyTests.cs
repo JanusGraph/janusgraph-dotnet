@@ -29,7 +29,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         [Fact]
         public void SerializeAndDeserialize_ValidRelationIdentifier_SameRelationIdentifier()
         {
-            var relationIdentifier = new RelationIdentifier("someRelationId");
+            var relationIdentifier = new RelationIdentifier("4qp-360-7x1-3aw");
             var writer = JanusGraphSONWriterBuilder.Build().Create();
             var reader = JanusGraphSONReaderBuilder.Build().Create();
 

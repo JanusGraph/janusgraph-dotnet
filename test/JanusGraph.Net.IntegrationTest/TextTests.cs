@@ -20,28 +20,22 @@
 
 using System;
 using System.Threading.Tasks;
-using Gremlin.Net.Structure;
 using Xunit;
 using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
 namespace JanusGraph.Net.IntegrationTest
 {
     [Collection("JanusGraph Server collection")]
-    public class TextTests : IDisposable
+    public abstract class TextTests : IDisposable
     {
-        private readonly RemoteConnectionFactory _connectionFactory;
-
-        public TextTests(JanusGraphServerFixture fixture)
-        {
-            _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
-        }
+        protected abstract RemoteConnectionFactory ConnectionFactory { get; }
 
         [Theory]
         [InlineData("loves", 2)]
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextContainsgivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.E().Has("reason", Text.TextContains(searchText)).Count().Promise(t => t.Next());
 
@@ -54,7 +48,7 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextContainsPrefixgivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.E().Has("reason", Text.TextContainsPrefix(searchText)).Count().Promise(t => t.Next());
 
@@ -67,7 +61,7 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextContainsRegexgivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.E().Has("reason", Text.TextContainsRegex(regex)).Count().Promise(t => t.Next());
 
@@ -79,7 +73,7 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextContainsFuzzygivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.E().Has("reason", Text.TextContainsFuzzy(searchText)).Count().Promise(t => t.Next());
 
@@ -92,7 +86,7 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextPrefixgivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.V().Has("name", Text.TextPrefix(searchText)).Count().Promise(t => t.Next());
 
@@ -105,7 +99,7 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextRegexgivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.V().Has("name", Text.TextRegex(regex)).Count().Promise(t => t.Next());
 
@@ -118,7 +112,7 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("shouldNotBeFound", 0)]
         public async Task TextFuzzygivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.V().Has("name", Text.TextFuzzy(searchText)).Count().Promise(t => t.Next());
 
@@ -127,7 +121,7 @@ namespace JanusGraph.Net.IntegrationTest
 
         public void Dispose()
         {
-            _connectionFactory?.Dispose();
+            ConnectionFactory?.Dispose();
         }
     }
 }

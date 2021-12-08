@@ -28,17 +28,17 @@ namespace JanusGraph.Net.IntegrationTest
     [Collection("JanusGraph Server collection")]
     public class DocTraversalsTests : IDisposable
     {
-        private readonly RemoteConnectionFactory _connectionFactory;
+        protected virtual RemoteConnectionFactory ConnectionFactory { get; }
 
         public DocTraversalsTests(JanusGraphServerFixture fixture)
         {
-            _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
+            ConnectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
         }
 
         [Fact]
         public void GremlinNetGettingStartedTest()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var herculesAge = g.V().Has("name", "hercules").Values<int>("age").Next();
 
@@ -48,7 +48,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Fact]
         public void ReceivingEdgesTest()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var edges = g.V().Has("name", "hercules").OutE("battled").ToList();
 
@@ -56,9 +56,9 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Fact]
-        public void TextContainsPredicateTest()
+        public virtual void TextContainsPredicateTest()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var reasons = g.E().Has("reason", Text.TextContains("loves")).ToList();
 
@@ -66,9 +66,9 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Fact]
-        public void GeoTypesPointsReceivedTest()
+        public virtual void GeoTypesPointsReceivedTest()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var firstBattlePlace = g.V().Has("name", "hercules").OutE("battled").Order().By("time")
                 .Values<Point>("place").Next();
@@ -78,16 +78,16 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Fact]
-        public void GeoTypesPointAsArgumentTest()
+        public virtual void GeoTypesPointAsArgumentTest()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             g.V().Has("name", "hercules").OutE("battled").Has("place", Geoshape.Point(38.1f, 23.7f)).Next();
         }
 
         public void Dispose()
         {
-            _connectionFactory?.Dispose();
+            ConnectionFactory?.Dispose();
         }
     }
 }

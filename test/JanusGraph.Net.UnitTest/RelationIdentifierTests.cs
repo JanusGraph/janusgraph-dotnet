@@ -32,5 +32,25 @@ namespace JanusGraph.Net.UnitTest
 
             Assert.Equal(relationId, relationIdentifier.ToString());
         }
+
+        [Fact]
+        public void CtrWithStr_ValidRelationId_ExpectedLongValues()
+        {
+            var relationIdentifier = new RelationIdentifier("4qp-360-7x1-3aw");
+
+            Assert.Equal(4104, relationIdentifier.OutVertexId);
+            Assert.Equal(10261, relationIdentifier.TypeId);
+            Assert.Equal(6145, relationIdentifier.RelationId);
+            Assert.Equal(4280, relationIdentifier.InVertexId);
+        }
+
+        [Fact]
+        public void CtrWithLongs_ValidLongValues_ExpectedStringRepresentation()
+        {
+            var relationIdentifier = new RelationIdentifier(4104, 10261, 6145, 4280);
+
+            Assert.Equal("4qp-360-7x1-3aw", relationIdentifier.StringRepresentation);
+            Assert.Equal("4qp-360-7x1-3aw", relationIdentifier.ToString());
+        }
     }
 }

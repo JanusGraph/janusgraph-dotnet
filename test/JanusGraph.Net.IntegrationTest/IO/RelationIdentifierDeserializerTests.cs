@@ -1,7 +1,7 @@
 #region License
 
 /*
- * Copyright 2018 JanusGraph.Net Authors
+ * Copyright 2021 JanusGraph.Net Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,22 +23,17 @@ using System.Threading.Tasks;
 using Xunit;
 using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
-namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
+namespace JanusGraph.Net.IntegrationTest.IO
 {
     [Collection("JanusGraph Server collection")]
-    public class RelationIdentifierDeserializerTests : IDisposable
+    public abstract class RelationIdentifierDeserializerTests : IDisposable
     {
-        private readonly RemoteConnectionFactory _connectionFactory;
-
-        public RelationIdentifierDeserializerTests(JanusGraphServerFixture fixture)
-        {
-            _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
-        }
+        protected abstract RemoteConnectionFactory ConnectionFactory { get; }
 
         [Fact]
         public async Task TraversalWithEdgeId_RelationIdentifierReturned_ValidRelationIdentifier()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var relationIdentifier =
                 await g.V().Has("demigod", "name", "hercules").OutE("father").Id().Promise(t => t.Next());
@@ -49,7 +44,7 @@ namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
         [Fact]
         public async Task TraversalWithEdge_EdgeReturned_EdgeWithIdOfTypeRelationIdentifier()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var edge = await g.V().Has("demigod", "name", "hercules").OutE("father").Promise(t => t.Next());
 
@@ -58,7 +53,7 @@ namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
 
         public void Dispose()
         {
-            _connectionFactory?.Dispose();
+            ConnectionFactory?.Dispose();
         }
     }
 }

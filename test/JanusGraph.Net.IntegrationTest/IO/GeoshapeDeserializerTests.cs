@@ -1,7 +1,7 @@
 #region License
 
 /*
- * Copyright 2018 JanusGraph.Net Authors
+ * Copyright 2021 JanusGraph.Net Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,32 +24,29 @@ using JanusGraph.Net.Geoshapes;
 using Xunit;
 using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
-namespace JanusGraph.Net.IntegrationTest.IO.GraphSON
+namespace JanusGraph.Net.IntegrationTest.IO
 {
     [Collection("JanusGraph Server collection")]
-    public class GeoshapeSerializerTests : IDisposable
+    public abstract class GeoshapeDeserializerTests : IDisposable
     {
-        private readonly RemoteConnectionFactory _connectionFactory;
-
-        public GeoshapeSerializerTests(JanusGraphServerFixture fixture)
-        {
-            _connectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
-        }
+        protected abstract RemoteConnectionFactory ConnectionFactory { get; }
 
         [Fact]
-        public async Task TraversalWithPointHasFilter_ExistingPoint_ElementFound()
+        public async Task TraversalWithPointPropertyValue_PointReturned_ExpectedPoint()
         {
-            var g = Traversal().WithRemote(_connectionFactory.CreateRemoteConnection());
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
-            var count = await g.V().Has("demigod", "name", "hercules").OutE("battled")
-                .Has("place", Geoshape.Point(38.1f, 23.7f)).Count().Promise(t => t.Next());
+            var place = await g.V().Has("demigod", "name", "hercules").OutE("battled").Has("time", 1)
+                .Values<Point>("place").Promise(t => t.Next());
 
-            Assert.Equal(1, count);
+            var expectedPlace = Geoshape.Point(38.1f, 23.7f);
+            Assert.Equal(expectedPlace.Latitude, place.Latitude, 3);
+            Assert.Equal(expectedPlace.Longitude, place.Longitude, 3);
         }
 
         public void Dispose()
         {
-            _connectionFactory?.Dispose();
+            ConnectionFactory?.Dispose();
         }
     }
 }

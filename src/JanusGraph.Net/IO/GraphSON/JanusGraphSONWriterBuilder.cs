@@ -51,7 +51,7 @@ namespace JanusGraph.Net.IO.GraphSON
         /// </summary>
         public static JanusGraphSONWriterBuilder Build()
         {
-            return new JanusGraphSONWriterBuilder(false);
+            return new JanusGraphSONWriterBuilder(true);
         }
 
         /// <summary>
