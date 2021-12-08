@@ -33,6 +33,7 @@ namespace JanusGraph.Net
         private readonly GremlinServer _server;
         private readonly JanusGraphSONReaderBuilder _readerBuilder = JanusGraphSONReaderBuilder.Build();
         private readonly JanusGraphSONWriterBuilder _writerBuilder;
+        private IMessageSerializer _serializer;
         private ConnectionPoolSettings _connectionPoolSettings;
 
         private JanusGraphClientBuilder(GremlinServer server, bool janusGraphPredicates)
@@ -47,7 +48,7 @@ namespace JanusGraph.Net
         /// <param name="server">The <see cref="GremlinServer" /> requests should be sent to.</param>
         public static JanusGraphClientBuilder BuildClientForServer(GremlinServer server)
         {
-            return new JanusGraphClientBuilder(server, false);
+            return new JanusGraphClientBuilder(server, true);
         }
 
         /// <summary>
@@ -64,10 +65,21 @@ namespace JanusGraph.Net
         }
 
         /// <summary>
+        ///     Registers a <see cref="IMessageSerializer"/> used to serialize data to and from JanusGraph Server.
+        /// </summary>
+        /// <param name="serializer">The serializer to use.</param>
+        public JanusGraphClientBuilder WithSerializer(IMessageSerializer serializer)
+        {
+            _serializer = serializer;
+            return this;
+        }
+
+        /// <summary>
         ///     Registers a custom GraphSON deserializer for the given GraphSON type.
         /// </summary>
         /// <param name="graphSONType">The GraphSON type the deserializer should be registered for.</param>
         /// <param name="deserializer">The deserializer to register.</param>
+        [Obsolete("Use WithSerializer() instead")]
         public JanusGraphClientBuilder RegisterDeserializer(string graphSONType, IGraphSONDeserializer deserializer)
         {
             _readerBuilder.RegisterDeserializer(graphSONType, deserializer);
@@ -79,6 +91,7 @@ namespace JanusGraph.Net
         /// </summary>
         /// <param name="type">The type the serializer should be registered for.</param>
         /// <param name="serializer">The serializer to register.</param>
+        [Obsolete("Use WithSerializer() instead")]
         public JanusGraphClientBuilder RegisterSerializer(Type type, IGraphSONSerializer serializer)
         {
             _writerBuilder.RegisterSerializer(type, serializer);
@@ -100,9 +113,9 @@ namespace JanusGraph.Net
         /// </summary>
         public IGremlinClient Create()
         {
-            return new GremlinClient(_server,
-                new GraphSON3MessageSerializer(_readerBuilder.Create(), _writerBuilder.Create()),
-                _connectionPoolSettings);
+            var serializer = _serializer ??
+                new JanusGraphGraphSONMessageSerializer(_readerBuilder.Create(), _writerBuilder.Create());
+            return new GremlinClient(_server, serializer, _connectionPoolSettings);
         }
     }
 }

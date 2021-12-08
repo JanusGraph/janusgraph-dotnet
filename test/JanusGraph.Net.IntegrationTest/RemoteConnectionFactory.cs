@@ -23,25 +23,33 @@ using System.Collections.Generic;
 using Gremlin.Net.Driver;
 using Gremlin.Net.Driver.Remote;
 using Gremlin.Net.Process.Remote;
+using JanusGraph.Net.IO.GraphSON;
 
 namespace JanusGraph.Net.IntegrationTest
 {
-    internal class RemoteConnectionFactory : IDisposable
+    public class RemoteConnectionFactory : IDisposable
     {
         private readonly IList<DriverRemoteConnection> _connections = new List<DriverRemoteConnection>();
         private readonly string _host;
         private readonly int _port;
+        private readonly IMessageSerializer _serializer;
 
         public RemoteConnectionFactory(string host, int port)
+            : this(host, port, new JanusGraphGraphSONMessageSerializer())
+        {
+        }
+
+        public RemoteConnectionFactory(string host, int port, IMessageSerializer serializer)
         {
             _host = host;
             _port = port;
+            _serializer = serializer;
         }
 
         public IRemoteConnection CreateRemoteConnection()
         {
             var c = new DriverRemoteConnection(JanusGraphClientBuilder
-                .BuildClientForServer(new GremlinServer(_host, _port)).Create());
+                .BuildClientForServer(new GremlinServer(_host, _port)).WithSerializer(_serializer).Create());
             _connections.Add(c);
             return c;
         }

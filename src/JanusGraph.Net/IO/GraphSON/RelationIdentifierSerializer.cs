@@ -33,7 +33,7 @@ namespace JanusGraph.Net.IO.GraphSON
 
         private static Dictionary<string, object> ValueDict(RelationIdentifier relationIdentifier)
         {
-            return new Dictionary<string, object> {{"relationId", relationIdentifier.RelationId}};
+            return new Dictionary<string, object> {{"relationId", relationIdentifier.StringRepresentation}};
         }
     }
 }

@@ -70,7 +70,7 @@ await g.V().Has("demigod", "name", "hercules").OutE("battled")
     .Has("place", Geoshape.Point(38.1f, 23.7f)).Count().Promise(t => t.Next());
 ```
 
-Only the point Geoshape is supported right now.
+Only the `Point` Geoshape is supported right now.
 
 ## Version Compatibility
 
@@ -78,17 +78,42 @@ The lowest supported JanusGraph version is 0.3.0.
 The following table shows the supported JanusGraph versions for each version
 of JanusGraph.Net:
 
-| JanusGraph.Net | JanusGraph |
-|---|---|
-| 0.1.z | 0.3.z |
-| 0.2.z | 0.4.z, 0.5.z |
-| 0.3.z | 0.4.z, 0.5.z, 0.6.z |
+| JanusGraph.Net | JanusGraph             |
+| -------------- | ---------------------- |
+| 0.1.z          | 0.3.z                  |
+| 0.2.z          | 0.4.z, 0.5.z           |
+| 0.3.z          | 0.4.z, 0.5.z, 0.6.z    |
+| 0.4.z          | (0.4.z, 0.5.z,)* 0.6.z |
 
 While it should also be possible to use JanusGraph.Net with other versions of
 JanusGraph than mentioned here, compatibility is not tested and some
 functionality (like added Gremlin steps) will not work as it is not supported
 yet in case of an older JanusGraph version or was removed in a newer JanusGraph
 version.
+
+\* JanusGraph.Net 0.4 still supports older versions of JanusGraph, but the
+`janusGraphPredicates` flag needs to be set to `false` in order to be able to
+use JanusGraph's Text predicates.
+
+## Serialization Formats
+
+JanusGraph.Net supports GraphSON 3 as well as GraphBinary. GraphSON 3 is used
+by default. GraphBinary can be configured like this:
+
+```c#
+var client = JanusGraphClientBuilder.BuildClientForServer(new GremlinServer("localhost", 8182))
+    .WithSerializer(new GraphBinaryMessageSerializer(JanusGraphTypeSerializerRegistry.Instance)).Create();
+```
+
+Note that support for GraphBinary was only added in JanusGraph 0.6.0. So, the
+server needs to be at least on that version.
+
+Not all of the JanusGraph-specific types are already supported by both formats:
+
+| Format      | RelationIdentifier | Text predicates | Geoshapes | Geo predicates |
+| ----------- | ------------------ | --------------- | --------- | -------------- |
+| GraphSON3   | x                  | x               | `Point`   | -              |
+| GraphBinary | x                  | x               | -         | -              |
 
 ## Community
 
