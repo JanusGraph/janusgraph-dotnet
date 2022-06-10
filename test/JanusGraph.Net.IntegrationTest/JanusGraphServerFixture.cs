@@ -19,47 +19,54 @@
 #endregion
 
 using System;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
+using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Configurations;
+using DotNet.Testcontainers.Containers;
+using Gremlin.Net.Driver;
+using Gremlin.Net.Driver.Remote;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using TestContainers.Container.Abstractions.Hosting;
-using TestContainers.Container.Abstractions.Models;
 using Xunit;
+using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
 namespace JanusGraph.Net.IntegrationTest
 {
     public class JanusGraphServerFixture : IAsyncLifetime
     {
-        private readonly GremlinServerContainer _container;
+        private readonly TestcontainersContainer _container;
+        private const ushort JanusGraphServerPort = 8182;
 
         public JanusGraphServerFixture()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var dockerImage = config["dockerImage"];
-            _container = new ContainerBuilder<GremlinServerContainer>()
-                .ConfigureDockerImageName(dockerImage)
-                .ConfigureLogging(builder =>
-                {
-                    builder.AddConsole();
-                    builder.SetMinimumLevel(LogLevel.Debug);
-                })
-                .ConfigureContainer((context, container) =>
-                {
-                    container.ExposedPorts.Add(GremlinServerContainer.GremlinServerPort);
-
-                    container.BindMounts.Add(new Bind
-                    {
-                        HostPath = $"{AppContext.BaseDirectory}/load_data.groovy",
-                        ContainerPath = "/docker-entrypoint-initdb.d/load_data.groovy",
-                        AccessMode = AccessMode.ReadOnly
-                    });
-                })
+            _container = new TestcontainersBuilder<TestcontainersContainer>()
+                .WithImage(dockerImage)
+                .WithName("janusgraph")
+                .WithPortBinding(JanusGraphServerPort)
+                .WithBindMount($"{AppContext.BaseDirectory}/load_data.groovy",
+                    "/docker-entrypoint-initdb.d/load_data.groovy", AccessMode.ReadOnly)
+                .WithWaitStrategy(Wait.ForUnixContainer().UntilOperationIsSucceeded(IsServerReady, 1000))
                 .Build();
-            _container.ServerStartedCheckTraversal = "g.V().has('name', 'hercules').hasNext()";
         }
 
-        public string Host => _container.Host;
-        public int Port => _container.Port;
+        private bool IsServerReady()
+        {
+            try
+            {
+                using var client = JanusGraphClientBuilder.BuildClientForServer(new GremlinServer(Host, Port)).Create();
+                var g = Traversal().WithRemote(new DriverRemoteConnection(client));
+                return g.V().Has("name", "hercules").HasNext();
+            }
+            catch (AggregateException e) when (e.InnerException is WebSocketException)
+            {
+                return false;
+            }
+        }
+
+        public string Host => _container.Hostname;
+        public int Port => _container.GetMappedPublicPort(JanusGraphServerPort);
 
         public Task InitializeAsync()
         {
