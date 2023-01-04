@@ -16,6 +16,8 @@ name: .NET
 
 on:
   push:
+    branches-ignore:
+      - 'dependabot/**'
   pull_request:
   release:
     types:
