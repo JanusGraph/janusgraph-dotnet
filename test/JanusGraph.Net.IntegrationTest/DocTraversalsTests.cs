@@ -19,7 +19,11 @@
 #endregion
 
 using System;
+using Gremlin.Net.Driver;
+using Gremlin.Net.Structure.IO.GraphBinary;
 using JanusGraph.Net.Geoshapes;
+using JanusGraph.Net.IO.GraphBinary;
+using JanusGraph.Net.IO.GraphSON;
 using Xunit;
 using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
@@ -33,6 +37,20 @@ namespace JanusGraph.Net.IntegrationTest
         public DocTraversalsTests(JanusGraphServerFixture fixture)
         {
             ConnectionFactory = new RemoteConnectionFactory(fixture.Host, fixture.Port);
+        }
+
+        [Fact(Skip = "No server running under localhost")]
+        public void CreateGremlinClientWithGraphSONTest()
+        {
+            var client = new GremlinClient(new GremlinServer("localhost", 8182),
+                new JanusGraphGraphSONMessageSerializer());
+        }
+
+        [Fact(Skip = "No server running under localhost")]
+        public void CreateGremlinClientWithGraphBinaryTest()
+        {
+            var client = new GremlinClient(new GremlinServer("localhost", 8182),
+                new GraphBinaryMessageSerializer(JanusGraphTypeSerializerRegistry.Instance));
         }
 
         [Fact]

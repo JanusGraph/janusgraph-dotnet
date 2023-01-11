@@ -28,6 +28,10 @@ namespace JanusGraph.Net
     /// <summary>
     ///     Allows creating of a <see cref="IGremlinClient" /> pre-configured for JanusGraph.
     /// </summary>
+    [Obsolete("We recommend that users directly create a GremlinClient instance instead of using this builder " +
+                "because it makes it easier to configure the GremlinClient. You just need to provide it with either " +
+                "a JanusGraphGraphSONMessageSerializer for GraphSON 3 or like this for GraphBinary: " +
+                "new GraphBinaryMessageSerializer(JanusGraphTypeSerializerRegistry.Instance).")]
     public class JanusGraphClientBuilder
     {
         private readonly GremlinServer _server;
