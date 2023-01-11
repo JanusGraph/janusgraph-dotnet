@@ -55,7 +55,7 @@ namespace JanusGraph.Net.IntegrationTest
         {
             try
             {
-                using var client = JanusGraphClientBuilder.BuildClientForServer(new GremlinServer(Host, Port)).Create();
+                using var client = new GremlinClient(new GremlinServer(Host, Port));
                 var g = Traversal().WithRemote(new DriverRemoteConnection(client));
                 return g.V().Has("name", "hercules").HasNext();
             }

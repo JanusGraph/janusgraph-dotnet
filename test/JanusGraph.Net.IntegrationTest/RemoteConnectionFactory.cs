@@ -48,8 +48,8 @@ namespace JanusGraph.Net.IntegrationTest
 
         public IRemoteConnection CreateRemoteConnection()
         {
-            var c = new DriverRemoteConnection(JanusGraphClientBuilder
-                .BuildClientForServer(new GremlinServer(_host, _port)).WithSerializer(_serializer).Create());
+            var client = new GremlinClient(new GremlinServer(_host, _port), _serializer);
+            var c = new DriverRemoteConnection(client);
             _connections.Add(c);
             return c;
         }

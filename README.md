@@ -1,8 +1,7 @@
 # JanusGraph.Net
 
-JanusGraph.Net is the .NET driver of [JanusGraph][janusgraph]. It extends
-Apache TinkerPop™'s [Gremlin.Net][gremlin.net] as its core dependency
-with additional support for JanusGraph-specific types.
+JanusGraph.Net extends Apache TinkerPop™'s [Gremlin.Net][gremlin.net] with
+support for [JanusGraph][janusgraph]-specific types.
 
 [![GitHub Workflow Status][actions-badge]][actions-url]
 [![Codacy Badge][codacy-badge]][codacy-url]
@@ -10,17 +9,35 @@ with additional support for JanusGraph-specific types.
 
 ## Usage
 
-JanusGraph.Net includes a `JanusGraphClientBuilder` that can be used to build
-a `IGremlinClient` pre-configured for JanusGraph. This client can then be used
-to configure a `GraphTraversalSource`:
+To connect to JanusGraph Server, a `GremlinClient` instance needs to be
+created and configured with a message serializer that adds support for
+JanusGraph specific types.
+
+This can be done like this for GraphSON 3:
 
 ```cs
-var client = JanusGraphClientBuilder
-    .BuildClientForServer(new GremlinServer("localhost", 8182))
-    .Create();
-// The client should be disposed on shut down to release resources
-// and to close open connections with client.Dispose()
-var g = new Graph().Traversal().WithRemote(new DriverRemoteConnection(client));
+var client = new GremlinClient(new GremlinServer("localhost", 8182),
+    new JanusGraphGraphSONMessageSerializer());
+```
+
+or like this for GraphBinary (see
+[Serialization Formats](#serialization-formats) for more information about
+GraphSON 3 and GraphBinary):
+
+```cs
+var client = new GremlinClient(new GremlinServer("localhost", 8182),
+    new GraphBinaryMessageSerializer(JanusGraphTypeSerializerRegistry.Instance));
+```
+
+Note that the client should be disposed on shut down to release resources and
+to close open connections with `client.Dispose()`.
+The client can then be used to configure a `GraphTraversalSource`:
+
+```cs
+// Add this static using to be able to call `Traversal()` "anonymously"
+using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
+
+var g = Traversal().WithRemote(new DriverRemoteConnection(client));
 // Reuse 'g' across the application
 ```
 
@@ -97,14 +114,7 @@ use JanusGraph's Text predicates.
 
 ## Serialization Formats
 
-JanusGraph.Net supports GraphSON 3 as well as GraphBinary. GraphSON 3 is used
-by default. GraphBinary can be configured like this:
-
-```c#
-var client = JanusGraphClientBuilder.BuildClientForServer(new GremlinServer("localhost", 8182))
-    .WithSerializer(new GraphBinaryMessageSerializer(JanusGraphTypeSerializerRegistry.Instance)).Create();
-```
-
+JanusGraph.Net supports GraphSON 3 as well as GraphBinary.
 Note that support for GraphBinary was only added in JanusGraph 0.6.0. So, the
 server needs to be at least on that version.
 
@@ -145,9 +155,9 @@ details about this dual-license structure, please see
 [actions-badge]: https://img.shields.io/github/actions/workflow/status/JanusGraph/janusgraph-dotnet/dotnet.yml?branch=master
 [actions-url]: https://github.com/JanusGraph/janusgraph-dotnet/actions
 [janusgraph]: https://janusgraph.org/
-[gremlin.net]: http://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
-[gremlin-chapter]: https://docs.janusgraph.org/basics/gremlin/
-[text-predicates]: https://docs.janusgraph.org/index-backend/search-predicates/#text-predicate
-[geoshapes]: https://docs.janusgraph.org/index-backend/search-predicates/#geoshape-data-type
+[gremlin.net]: https://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
+[gremlin-chapter]: https://docs.janusgraph.org/getting-started/gremlin/
+[text-predicates]: https://docs.janusgraph.org/interactions/search-predicates/#text-predicate
+[geoshapes]: https://docs.janusgraph.org/interactions/search-predicates/#geoshape-data-type
 [janusgraph-community]: https://github.com/JanusGraph/janusgraph#community
 [janusgraph-contributing]: https://github.com/JanusGraph/janusgraph/blob/master/CONTRIBUTING.md
