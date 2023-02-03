@@ -34,17 +34,17 @@ namespace JanusGraph.Net.IntegrationTest
 {
     public class JanusGraphServerFixture : IAsyncLifetime
     {
-        private readonly TestcontainersContainer _container;
+        private readonly IContainer _container;
         private const ushort JanusGraphServerPort = 8182;
 
         public JanusGraphServerFixture()
         {
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             var dockerImage = config["dockerImage"];
-            _container = new TestcontainersBuilder<TestcontainersContainer>()
+            _container = new ContainerBuilder()
                 .WithImage(dockerImage)
                 .WithName("janusgraph")
-                .WithPortBinding(JanusGraphServerPort)
+                .WithPortBinding(JanusGraphServerPort, true)
                 .WithBindMount($"{AppContext.BaseDirectory}/load_data.groovy",
                     "/docker-entrypoint-initdb.d/load_data.groovy", AccessMode.ReadOnly)
                 .WithWaitStrategy(Wait.ForUnixContainer().UntilOperationIsSucceeded(IsServerReady, 1000))
