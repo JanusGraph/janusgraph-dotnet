@@ -42,9 +42,9 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack -v minimal -c Release --no-restore -o ./artifacts
+      run: dotnet pack ./src/JanusGraph.Net/JanusGraph.Net.csproj -v minimal -c Release --no-build -o ./artifacts
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
       with:
