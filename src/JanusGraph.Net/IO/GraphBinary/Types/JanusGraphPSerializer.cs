@@ -19,6 +19,7 @@
 #endregion
 
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Gremlin.Net.Structure.IO.GraphBinary;
 
@@ -31,16 +32,18 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         }
 
         protected override async Task WriteNonNullableValueAsync(JanusGraphP value, Stream stream,
-            GraphBinaryWriter writer)
+            GraphBinaryWriter writer, CancellationToken cancellationToken = default)
         {
-            await writer.WriteValueAsync(value.OperatorName, stream, false).ConfigureAwait(false);
-            await writer.WriteAsync(value.Value, stream).ConfigureAwait(false);
+            await writer.WriteValueAsync(value.OperatorName, stream, false, cancellationToken).ConfigureAwait(false);
+            await writer.WriteAsync(value.Value, stream, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<JanusGraphP> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader)
+        protected override async Task<JanusGraphP> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
+            CancellationToken cancellationToken = default)
         {
-            var operatorName = (string)await reader.ReadValueAsync<string>(stream, false).ConfigureAwait(false);
-            var value = await reader.ReadAsync(stream).ConfigureAwait(false);
+            var operatorName = (string)await reader.ReadValueAsync<string>(stream, false, cancellationToken)
+                .ConfigureAwait(false);
+            var value = await reader.ReadAsync(stream, cancellationToken).ConfigureAwait(false);
             return new JanusGraphP(operatorName, value);
         }
     }

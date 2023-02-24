@@ -19,6 +19,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Gremlin.Net.Driver;
 using Gremlin.Net.Driver.Messages;
@@ -66,15 +67,17 @@ namespace JanusGraph.Net.IO.GraphSON
         }
 
         /// <inheritdoc />
-        public async Task<byte[]> SerializeMessageAsync(RequestMessage requestMessage)
+        public async Task<byte[]> SerializeMessageAsync(RequestMessage requestMessage,
+            CancellationToken cancellationToken = default)
         {
-            return await _serializer.SerializeMessageAsync(requestMessage).ConfigureAwait(false);
+            return await _serializer.SerializeMessageAsync(requestMessage, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public async Task<ResponseMessage<List<object>>> DeserializeMessageAsync(byte[] message)
+        public async Task<ResponseMessage<List<object>>> DeserializeMessageAsync(byte[] message,
+            CancellationToken cancellationToken = default)
         {
-            return await _serializer.DeserializeMessageAsync(message).ConfigureAwait(false);
+            return await _serializer.DeserializeMessageAsync(message, cancellationToken).ConfigureAwait(false);
         }
     }
 }

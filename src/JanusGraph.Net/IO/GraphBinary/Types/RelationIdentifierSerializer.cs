@@ -19,6 +19,7 @@
 #endregion
 
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Gremlin.Net.Structure.IO.GraphBinary;
 
@@ -31,21 +32,21 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         }
 
         protected override async Task WriteNonNullableValueAsync(RelationIdentifier value, Stream stream,
-            GraphBinaryWriter writer)
+            GraphBinaryWriter writer, CancellationToken cancellationToken = default)
         {
-            await stream.WriteLongAsync(value.OutVertexId).ConfigureAwait(false);
-            await stream.WriteLongAsync(value.TypeId).ConfigureAwait(false);
-            await stream.WriteLongAsync(value.RelationId).ConfigureAwait(false);
-            await stream.WriteLongAsync(value.InVertexId).ConfigureAwait(false);
+            await stream.WriteLongAsync(value.OutVertexId, cancellationToken).ConfigureAwait(false);
+            await stream.WriteLongAsync(value.TypeId, cancellationToken).ConfigureAwait(false);
+            await stream.WriteLongAsync(value.RelationId, cancellationToken).ConfigureAwait(false);
+            await stream.WriteLongAsync(value.InVertexId, cancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task<RelationIdentifier> ReadNonNullableValueAsync(Stream stream,
-            GraphBinaryReader reader)
+            GraphBinaryReader reader, CancellationToken cancellationToken = default)
         {
-            var outVertexId = await stream.ReadLongAsync().ConfigureAwait(false);
-            var typeId = await stream.ReadLongAsync().ConfigureAwait(false);
-            var relationId = await stream.ReadLongAsync().ConfigureAwait(false);
-            var inVertexId = await stream.ReadLongAsync().ConfigureAwait(false);
+            var outVertexId = await stream.ReadLongAsync(cancellationToken).ConfigureAwait(false);
+            var typeId = await stream.ReadLongAsync(cancellationToken).ConfigureAwait(false);
+            var relationId = await stream.ReadLongAsync(cancellationToken).ConfigureAwait(false);
+            var inVertexId = await stream.ReadLongAsync(cancellationToken).ConfigureAwait(false);
             return new RelationIdentifier(outVertexId, typeId, relationId, inVertexId);
         }
     }
