@@ -40,10 +40,10 @@ namespace JanusGraph.Net
         private IMessageSerializer _serializer;
         private ConnectionPoolSettings _connectionPoolSettings;
 
-        private JanusGraphClientBuilder(GremlinServer server, bool janusGraphPredicates)
+        private JanusGraphClientBuilder(GremlinServer server)
         {
             _server = server;
-            _writerBuilder = JanusGraphSONWriterBuilder.Build(janusGraphPredicates);
+            _writerBuilder = JanusGraphSONWriterBuilder.Build();
         }
 
         /// <summary>
@@ -52,20 +52,7 @@ namespace JanusGraph.Net
         /// <param name="server">The <see cref="GremlinServer" /> requests should be sent to.</param>
         public static JanusGraphClientBuilder BuildClientForServer(GremlinServer server)
         {
-            return new JanusGraphClientBuilder(server, true);
-        }
-
-        /// <summary>
-        ///     Initializes a <see cref="JanusGraphClientBuilder" /> for the given <see cref="GremlinServer" />.
-        /// </summary>
-        /// <param name="server">The <see cref="GremlinServer" /> requests should be sent to.</param>
-        /// <param name="janusGraphPredicates">
-        ///     This value activates support for JanusGraph predicate serialization added in JanusGraph 0.6.0. It should be set to
-        ///     true for JanusGraph Server versions >= 0.6.0 and to false for versions before 0.6.0.
-        /// </param>
-        public static JanusGraphClientBuilder BuildClientForServer(GremlinServer server, bool janusGraphPredicates)
-        {
-            return new JanusGraphClientBuilder(server, janusGraphPredicates);
+            return new JanusGraphClientBuilder(server);
         }
 
         /// <summary>

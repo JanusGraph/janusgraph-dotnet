@@ -20,7 +20,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Gremlin.Net.Process.Traversal;
 using Gremlin.Net.Structure.IO.GraphSON;
 using JanusGraph.Net.Geoshapes;
 using JanusGraph.Net.IO.GraphSON;
@@ -53,30 +52,6 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
                 .Create();
 
             Assert.Equal(customSerializer.DeserializationResult, writer.WriteObject(Geoshape.Point(1, 2)));
-        }
-
-        [Fact]
-        public void Build_DisabledJanusGraphPredicates_UsesTinkerPopPredicateSerializationForJanusGraphPredicate()
-        {
-            var janusgraphPredicate = Text.TextContainsFuzzy("test");
-            var tinkerpopPredicate = new P(janusgraphPredicate.OperatorName, janusgraphPredicate.Value);
-
-            // ReSharper disable once RedundantArgumentDefaultValue
-            var writer = JanusGraphSONWriterBuilder.Build(false).Create();
-
-            Assert.Equal(writer.WriteObject(tinkerpopPredicate), writer.WriteObject(janusgraphPredicate));
-        }
-
-        [Fact]
-        public void Build_EnabledJanusGraphPredicates_UsesJanusGraphPredicateSerializationForJanusGraphPredicate()
-        {
-            var janusgraphPredicate = Text.TextContainsFuzzy("test");
-
-            var writer = JanusGraphSONWriterBuilder.Build(true).Create();
-
-            const string janusgraphPredicateGraphSon =
-                "{\"@type\":\"janusgraph:JanusGraphP\",\"@value\":{\"predicate\":\"textContainsFuzzy\",\"value\":\"test\"}}";
-            Assert.Equal(janusgraphPredicateGraphSon, writer.WriteObject(janusgraphPredicate));
         }
 
         private class SerializerFake : IGraphSONSerializer
