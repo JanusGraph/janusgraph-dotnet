@@ -25,20 +25,21 @@ using Gremlin.Net.Structure.IO.GraphBinary;
 
 namespace JanusGraph.Net.IO.GraphBinary.Types
 {
-    internal class JanusGraphPSerializer : JanusGraphTypeSerializer<JanusGraphP>
+    internal class JanusGraphPSerializer : JanusGraphTypeSerializer
     {
         public JanusGraphPSerializer() : base(GraphBinaryType.JanusGraphP)
         {
         }
 
-        protected override async Task WriteNonNullableValueAsync(JanusGraphP value, Stream stream,
+        protected override async Task WriteNonNullableValueAsync(object value, Stream stream,
             GraphBinaryWriter writer, CancellationToken cancellationToken = default)
         {
-            await writer.WriteValueAsync(value.OperatorName, stream, false, cancellationToken).ConfigureAwait(false);
-            await writer.WriteAsync(value.Value, stream, cancellationToken).ConfigureAwait(false);
+            var p = (JanusGraphP)value;
+            await writer.WriteValueAsync(p.OperatorName, stream, false, cancellationToken).ConfigureAwait(false);
+            await writer.WriteAsync(p.Value, stream, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<JanusGraphP> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
+        protected override async Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
             CancellationToken cancellationToken = default)
         {
             var operatorName = (string)await reader.ReadValueAsync<string>(stream, false, cancellationToken)

@@ -123,7 +123,10 @@ Not all of the JanusGraph-specific types are already supported by both formats:
 | Format      | RelationIdentifier | Text predicates | Geoshapes | Geo predicates |
 | ----------- | ------------------ | --------------- | --------- | -------------- |
 | GraphSON3   | x                  | x               | `Point`   | -              |
-| GraphBinary | x                  | x               | -         | -              |
+| GraphBinary | x                  | x               | `Point`*  | -              |
+
+\* Since version 1.0.0 of JanusGraph.Net.
+JanusGraph also needs to be on version 1.0.0 or higher.
 
 ## Community
 
