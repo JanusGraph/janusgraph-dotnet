@@ -52,20 +52,6 @@ namespace JanusGraph.Net.IO.GraphSON
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="JanusGraphGraphSONMessageSerializer" /> class.
-        /// </summary>
-        /// <param name="janusGraphPredicates">
-        ///     This value activates support for JanusGraph predicate serialization added in
-        ///     JanusGraph 0.6.0. It should be set to true for JanusGraph Server versions >= 0.6.0 and to false for versions before
-        ///     0.6.0.
-        /// </param>
-        public JanusGraphGraphSONMessageSerializer(bool janusGraphPredicates)
-            : this(JanusGraphSONReaderBuilder.Build().Create(),
-                JanusGraphSONWriterBuilder.Build(janusGraphPredicates).Create())
-        {
-        }
-
         /// <inheritdoc />
         public async Task<byte[]> SerializeMessageAsync(RequestMessage requestMessage,
             CancellationToken cancellationToken = default)
