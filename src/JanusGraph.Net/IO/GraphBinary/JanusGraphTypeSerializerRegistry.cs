@@ -21,6 +21,7 @@
 using System;
 using Gremlin.Net.Structure.IO.GraphBinary;
 using Gremlin.Net.Structure.IO.GraphBinary.Types;
+using JanusGraph.Net.Geoshapes;
 using JanusGraph.Net.IO.GraphBinary.Types;
 
 namespace JanusGraph.Net.IO.GraphBinary
@@ -48,6 +49,7 @@ namespace JanusGraph.Net.IO.GraphBinary
             {
                 _builder.AddCustomType(typeof(RelationIdentifier), new RelationIdentifierSerializer());
                 _builder.AddCustomType(typeof(JanusGraphP), new JanusGraphPSerializer());
+                _builder.AddCustomType(typeof(Point), new GeoshapeSerializer());
             }
 
             /// <summary>

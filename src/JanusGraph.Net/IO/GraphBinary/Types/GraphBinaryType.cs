@@ -25,6 +25,9 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
     /// </summary>
     public class GraphBinaryType
     {
+        internal static readonly GraphBinaryType Geoshape =
+            new GraphBinaryType(0x1000, "janusgraph.Geoshape");
+
         internal static readonly GraphBinaryType RelationIdentifier =
             new GraphBinaryType(0x1001, "janusgraph.RelationIdentifier");
 

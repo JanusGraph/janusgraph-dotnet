@@ -25,22 +25,23 @@ using Gremlin.Net.Structure.IO.GraphBinary;
 
 namespace JanusGraph.Net.IO.GraphBinary.Types
 {
-    internal class RelationIdentifierSerializer : JanusGraphTypeSerializer<RelationIdentifier>
+    internal class RelationIdentifierSerializer : JanusGraphTypeSerializer
     {
         public RelationIdentifierSerializer() : base(GraphBinaryType.RelationIdentifier)
         {
         }
 
-        protected override async Task WriteNonNullableValueAsync(RelationIdentifier value, Stream stream,
+        protected override async Task WriteNonNullableValueAsync(object value, Stream stream,
             GraphBinaryWriter writer, CancellationToken cancellationToken = default)
         {
-            await stream.WriteLongAsync(value.OutVertexId, cancellationToken).ConfigureAwait(false);
-            await stream.WriteLongAsync(value.TypeId, cancellationToken).ConfigureAwait(false);
-            await stream.WriteLongAsync(value.RelationId, cancellationToken).ConfigureAwait(false);
-            await stream.WriteLongAsync(value.InVertexId, cancellationToken).ConfigureAwait(false);
+            var relationIdentifier = (RelationIdentifier)value;
+            await stream.WriteLongAsync(relationIdentifier.OutVertexId, cancellationToken).ConfigureAwait(false);
+            await stream.WriteLongAsync(relationIdentifier.TypeId, cancellationToken).ConfigureAwait(false);
+            await stream.WriteLongAsync(relationIdentifier.RelationId, cancellationToken).ConfigureAwait(false);
+            await stream.WriteLongAsync(relationIdentifier.InVertexId, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<RelationIdentifier> ReadNonNullableValueAsync(Stream stream,
+        protected override async Task<object> ReadNonNullableValueAsync(Stream stream,
             GraphBinaryReader reader, CancellationToken cancellationToken = default)
         {
             var outVertexId = await stream.ReadLongAsync(cancellationToken).ConfigureAwait(false);

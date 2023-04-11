@@ -29,13 +29,12 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
     /// <summary>
     ///     Base class for GraphBinary serializers of JanusGraph types.
     /// </summary>
-    /// <typeparam name="T">The JanusGraph type to be serialized.</typeparam>
-    public abstract class JanusGraphTypeSerializer<T> : CustomTypeSerializer
+    public abstract class JanusGraphTypeSerializer : CustomTypeSerializer
     {
         private readonly GraphBinaryType _type;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="JanusGraphTypeSerializer{T}" /> class.
+        ///     Initializes a new instance of the <see cref="JanusGraphTypeSerializer" /> class.
         /// </summary>
         /// <param name="type">The GraphBinaryType for this serializer.</param>
         protected JanusGraphTypeSerializer(GraphBinaryType type)
@@ -72,7 +71,7 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
                 await writer.WriteValueFlagNoneAsync(stream, cancellationToken).ConfigureAwait(false);
             }
 
-            await WriteNonNullableValueAsync((T) value, stream, writer, cancellationToken).ConfigureAwait(false);
+            await WriteNonNullableValueAsync(value, stream, writer, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -83,7 +82,7 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         /// <param name="writer">A <see cref="GraphBinaryWriter"/> that can be used to write nested values.</param>
         /// <param name="cancellationToken">The token to cancel the operation. The default value is None.</param>
         /// <returns>A task that represents the asynchronous write operation.</returns>
-        protected abstract Task WriteNonNullableValueAsync(T value, Stream stream, GraphBinaryWriter writer,
+        protected abstract Task WriteNonNullableValueAsync(object value, Stream stream, GraphBinaryWriter writer,
             CancellationToken cancellationToken = default);
 
         /// <inheritdoc />
@@ -123,7 +122,7 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         /// <param name="reader">A <see cref="GraphBinaryReader"/> that can be used to read nested values.</param>
         /// <param name="cancellationToken">The token to cancel the operation. The default value is None.</param>
         /// <returns>The read value.</returns>
-        protected abstract Task<T> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
+        protected abstract Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
             CancellationToken cancellationToken = default);
 
         /// <inheritdoc />
