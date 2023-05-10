@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
  * Copyright 2021 JanusGraph.Net Authors
@@ -32,7 +32,8 @@ namespace JanusGraph.Net.IO.GraphBinary
     public static class JanusGraphTypeSerializerRegistry
     {
         /// <summary>
-        ///     Provides a default <see cref="TypeSerializerRegistry" /> instance with JanusGraph types already registered.
+        ///     Provides a default <see cref="TypeSerializerRegistry" /> instance with JanusGraph types already
+        ///     registered.
         /// </summary>
         public static readonly TypeSerializerRegistry Instance = Build().Create();
 

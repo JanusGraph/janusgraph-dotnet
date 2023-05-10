@@ -28,9 +28,9 @@ namespace JanusGraph.Net.IO.GraphSON
     {
         public Dictionary<string, dynamic> Dictify(dynamic objectData, GraphSONWriter writer)
         {
-            var point = (Point) objectData;
+            var point = (Point)objectData;
             return GraphSONUtil.ToTypedValue("Geoshape",
-                new Dictionary<string, object> {{"coordinates", point.Coordinates}}, "janusgraph");
+                new Dictionary<string, object> { { "coordinates", point.Coordinates } }, "janusgraph");
         }
     }
 }

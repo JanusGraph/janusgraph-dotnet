@@ -27,13 +27,13 @@ namespace JanusGraph.Net.IO.GraphSON
     {
         public Dictionary<string, dynamic> Dictify(dynamic objectData, GraphSONWriter writer)
         {
-            var relationIdentifier = (RelationIdentifier) objectData;
+            var relationIdentifier = (RelationIdentifier)objectData;
             return GraphSONUtil.ToTypedValue("RelationIdentifier", ValueDict(relationIdentifier), "janusgraph");
         }
 
         private static Dictionary<string, object> ValueDict(RelationIdentifier relationIdentifier)
         {
-            return new Dictionary<string, object> {{"relationId", relationIdentifier.StringRepresentation}};
+            return new Dictionary<string, object> { { "relationId", relationIdentifier.StringRepresentation } };
         }
     }
 }

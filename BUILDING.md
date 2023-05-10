@@ -5,7 +5,8 @@ JanusGraph.Net uses dotnet build for convenient builds across platforms.
 ## Requirements
 
 * [.NET 6.0 SDK (version >= 2.1.400)][dotnet-sdk] is needed to build and test the project.
-* [Docker][docker] needs to be running in order to execute the integration tests as they automatically start a JanusGraph Docker container.
+* [Docker][docker] needs to be running in order to execute the integration tests as they automatically start a
+JanusGraph Docker container.
 
 ## Build
 
@@ -37,7 +38,7 @@ and then push this tag:
 git push origin v0.1.0
 ```
 
-This will trigger a deployment via Github Actions after the usual build has completed
+This will trigger a deployment via GitHub Actions after the usual build has completed
 successfully.
 The version number used for the tag should correspond to the version in the
 `.csproj` file as that version is used for the NuGet package.

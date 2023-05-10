@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
  * Copyright 2018 JanusGraph.Net Authors
@@ -34,10 +34,11 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         public void RegisterDeserializer_CustomDeserializerForGivenType_DeserializerRegistered(string graphSONType,
             object deserializationResult)
         {
-            var customDeserializer = new DeserializerFake {DeserializationResult = deserializationResult};
+            var customDeserializer = new DeserializerFake { DeserializationResult = deserializationResult };
             var graphSon = "{\"@type\":\"" + graphSONType + "\",\"@value\":0}";
 
-            var reader = JanusGraphSONReaderBuilder.Build().RegisterDeserializer(graphSONType, customDeserializer).Create();
+            var reader = JanusGraphSONReaderBuilder.Build().RegisterDeserializer(graphSONType, customDeserializer)
+                .Create();
 
             Assert.Equal(deserializationResult, reader.ToObject(JsonDocument.Parse(graphSon).RootElement));
         }

@@ -23,8 +23,8 @@ using System;
 namespace JanusGraph.Net.Geoshapes
 {
     /// <summary>
-    ///     A single point representation. A point is identified by its coordinate on the earth sphere using the spherical
-    ///     system of latitudes and longitudes.
+    ///     A single point representation. A point is identified by its coordinate on the earth sphere using the
+    ///     spherical system of latitudes and longitudes.
     /// </summary>
     public class Point : IEquatable<Point>
     {
@@ -47,7 +47,7 @@ namespace JanusGraph.Net.Geoshapes
         /// <summary>
         ///     Gets the coordinates of this point in the form: [longitude, latitude].
         /// </summary>
-        public double[] Coordinates => new[] {Longitude, Latitude};
+        public double[] Coordinates => new[] { Longitude, Latitude };
 
         /// <inheritdoc />
         public bool Equals(Point other)
@@ -63,7 +63,7 @@ namespace JanusGraph.Net.Geoshapes
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((Point) obj);
+            return Equals((Point)obj);
         }
 
         /// <inheritdoc />

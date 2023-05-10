@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
  * Copyright 2018 JanusGraph.Net Authors
@@ -63,8 +63,8 @@ namespace JanusGraph.Net.IO.GraphSON
         }
 
         /// <summary>
-        ///     Creates a <see cref="GraphSONWriter" /> with the registered serializers as well as the default JanusGraph
-        ///     serializers.
+        ///     Creates a <see cref="GraphSONWriter" /> with the registered serializers as well as the default
+        ///     JanusGraph serializers.
         /// </summary>
         public GraphSON3Writer Create()
         {

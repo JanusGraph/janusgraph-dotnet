@@ -155,7 +155,8 @@ details about this dual-license structure, please see
 [codacy-url]: https://app.codacy.com/project/JanusGraph/janusgraph-dotnet/dashboard
 [nuget-badge]: https://img.shields.io/nuget/v/JanusGraph.NET
 [nuget-url]: https://www.nuget.org/packages/JanusGraph.NET/
-[actions-badge]: https://img.shields.io/github/actions/workflow/status/JanusGraph/janusgraph-dotnet/dotnet.yml?branch=master
+[actions-badge]:
+https://img.shields.io/github/actions/workflow/status/JanusGraph/janusgraph-dotnet/dotnet.yml?branch=master
 [actions-url]: https://github.com/JanusGraph/janusgraph-dotnet/actions
 [janusgraph]: https://janusgraph.org/
 [gremlin.net]: https://tinkerpop.apache.org/docs/current/reference/#gremlin-DotNet
