@@ -115,7 +115,7 @@ namespace JanusGraph.Net
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((RelationIdentifier) obj);
+            return Equals((RelationIdentifier)obj);
         }
 
         /// <inheritdoc />

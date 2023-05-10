@@ -27,10 +27,10 @@ namespace JanusGraph.Net.IO.GraphSON
     {
         public Dictionary<string, dynamic> Dictify(dynamic objectData, GraphSONWriter writer)
         {
-            var p = (JanusGraphP) objectData;
+            var p = (JanusGraphP)objectData;
             var value = p.Other == null
                 ? writer.ToDict(p.Value)
-                : new List<dynamic> {writer.ToDict(p.Value), writer.ToDict(p.Other)};
+                : new List<dynamic> { writer.ToDict(p.Value), writer.ToDict(p.Other) };
 
             var dict = new Dictionary<string, dynamic>
             {

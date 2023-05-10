@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
  * Copyright 2023 JanusGraph.Net Authors

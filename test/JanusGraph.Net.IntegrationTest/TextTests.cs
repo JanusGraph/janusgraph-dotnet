@@ -46,7 +46,8 @@ namespace JanusGraph.Net.IntegrationTest
         [InlineData("wave", 1)]
         [InlineData("f", 2)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextContainsPrefixgivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        public async Task TextContainsPrefixgivenSearchText_ExpectedCountOfElements(string searchText,
+            int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 

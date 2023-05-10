@@ -48,8 +48,8 @@ namespace JanusGraph.Net
         /// <returns>The text predicate.</returns>
         public static P TextContainsRegex(string regex) => new JanusGraphP("textContainsRegex", regex);
         /// <summary>
-        ///     Is true if (at least) one word inside the text string is similar to the query String (based on Levenshtein edit
-        ///     distance).
+        ///     Is true if (at least) one word inside the text string is similar to the query String (based on
+        ///     Levenshtein edit distance).
         /// </summary>
         /// <param name="query">The query to search.</param>
         /// <returns>The text predicate.</returns>

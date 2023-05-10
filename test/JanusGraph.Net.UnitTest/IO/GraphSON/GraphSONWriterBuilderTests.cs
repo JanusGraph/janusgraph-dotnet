@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
  * Copyright 2018 JanusGraph.Net Authors
@@ -37,8 +37,8 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
         {
             var customSerializer = SerializerFake.Register(graphSonTypeToUse, dataToSerialize);
 
-            var writer = JanusGraphSONWriterBuilder.Build().RegisterSerializer(dataToSerialize.GetType(), customSerializer)
-                .Create();
+            var writer = JanusGraphSONWriterBuilder.Build()
+                .RegisterSerializer(dataToSerialize.GetType(), customSerializer).Create();
 
             Assert.Equal(customSerializer.DeserializationResult, writer.WriteObject(dataToSerialize));
         }
@@ -61,7 +61,7 @@ namespace JanusGraph.Net.UnitTest.IO.GraphSON
 
             private SerializerFake(string graphSonType, object valueToReturn)
             {
-                _typedValue = new Dictionary<string, dynamic> {{graphSonType, valueToReturn}};
+                _typedValue = new Dictionary<string, dynamic> { { graphSonType, valueToReturn } };
             }
 
             public static SerializerFake Register(string graphSonType, object valueToReturn)

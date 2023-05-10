@@ -1,3 +1,4 @@
+---
 # Copyright 2020 JanusGraph Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,24 +33,24 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build -c Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
-    - name: Pack
-      run: dotnet pack ./src/JanusGraph.Net/JanusGraph.Net.csproj -v minimal -c Release --no-build -o ./artifacts
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: artifacts
-        path: ./artifacts/*.nupkg
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Install dependencies
+        run: "dotnet restore"
+      - name: Build
+        run: dotnet build -c Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      - name: Pack
+        run: dotnet pack ./src/JanusGraph.Net/JanusGraph.Net.csproj -v minimal -c Release --no-build -o ./artifacts
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: ./artifacts/*.nupkg
 
   deploy:
     needs: build
@@ -67,4 +68,4 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Push to NuGet Feed
-        run: dotnet nuget push './artifacts/*.nupkg' --skip-duplicate --source $NUGET_FEED --api-key $NUGET_KEY
+        run: dotnet nuget push './artifacts/*.nupkg' --skip-duplicate --source "$NUGET_FEED" --api-key "$NUGET_KEY"

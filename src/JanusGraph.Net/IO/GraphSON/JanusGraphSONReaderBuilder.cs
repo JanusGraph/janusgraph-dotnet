@@ -1,4 +1,4 @@
-﻿#region License
+#region License
 
 /*
  * Copyright 2018 JanusGraph.Net Authors
@@ -24,8 +24,8 @@ using Gremlin.Net.Structure.IO.GraphSON;
 namespace JanusGraph.Net.IO.GraphSON
 {
     /// <summary>
-    ///     Creates a <see cref="GraphSONReader" /> with the default JanusGraph deserializers and allows adding of custom
-    ///     deserializers.
+    ///     Creates a <see cref="GraphSONReader" /> with the default JanusGraph deserializers and allows adding of
+    ///     custom deserializers.
     /// </summary>
     public class JanusGraphSONReaderBuilder
     {
@@ -61,8 +61,8 @@ namespace JanusGraph.Net.IO.GraphSON
         }
 
         /// <summary>
-        ///     Creates a <see cref="GraphSONReader" /> with the registered deserializers as well as the default JanusGraph
-        ///     deserializers.
+        ///     Creates a <see cref="GraphSONReader" /> with the registered deserializers as well as the default
+        ///     JanusGraph deserializers.
         /// </summary>
         public GraphSON3Reader Create()
         {
