@@ -26,11 +26,26 @@ namespace JanusGraph.Net.Utils
     /// <summary>
     ///     Utility class for encoding longs in strings, re-implemented from its Java equivalent.
     /// </summary>
-    internal static class LongEncoding
+    /// <remarks>
+    ///     JanusGraph encodes long IDs in the <see cref="RelationIdentifier"/> as strings.
+    /// </remarks>
+    public static class LongEncoding
     {
-        private const string BaseSymbols = "0123456789abcdefghijklmnopqrstuvwxyz";
+        /// <summary>
+        ///     The symbols used for the encoding.
+        /// </summary>
+        // ReSharper disable once MemberCanBePrivate.Global
+        public static readonly string BaseSymbols = "0123456789abcdefghijklmnopqrstuvwxyz";
         private static readonly int NrSymbols = BaseSymbols.Length;
 
+        /// <summary>
+        ///     Decodes a string back into a long.
+        /// </summary>
+        /// <param name="s">The string to decode.</param>
+        /// <returns>The decoded long value.</returns>
+        /// <exception cref="ArgumentException">
+        ///     Thrown if the string contains any invalid characters. Only <see cref="BaseSymbols"/> are allowed.
+        /// </exception>
         public static long Decode(string s)
         {
             long num = 0;
@@ -46,12 +61,17 @@ namespace JanusGraph.Net.Utils
             return num;
         }
 
+        /// <summary>
+        ///     Encodes a long value as a string.
+        /// </summary>
+        /// <param name="num">The long value to encode.</param>
+        /// <returns>The encoded string value.</returns>
         public static string Encode(long num)
         {
             var sb = new StringBuilder();
             while (num != 0)
             {
-                sb.Append(BaseSymbols[(int)num % NrSymbols]);
+                sb.Append(BaseSymbols[(int)(num % NrSymbols)]);
                 num /= NrSymbols;
             }
 
