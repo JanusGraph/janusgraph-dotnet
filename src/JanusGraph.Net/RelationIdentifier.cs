@@ -54,10 +54,10 @@ namespace JanusGraph.Net
         /// <summary>
         ///     Initializes a new instance of the <see cref="RelationIdentifier" /> class.
         /// </summary>
-        /// <param name="outVertexId"></param>
-        /// <param name="typeId"></param>
-        /// <param name="relationId"></param>
-        /// <param name="inVertexId"></param>
+        /// <param name="outVertexId">The id of the outgoing vertex.</param>
+        /// <param name="typeId">The JanusGraph internal type id.</param>
+        /// <param name="relationId">The JanusGraph internal relation id.</param>
+        /// <param name="inVertexId">The id of the incoming vertex.</param>
         public RelationIdentifier(long outVertexId, long typeId, long relationId, long inVertexId)
         {
             OutVertexId = outVertexId;
