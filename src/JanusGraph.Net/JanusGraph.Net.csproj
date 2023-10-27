@@ -6,6 +6,8 @@
     <IncludeSource>True</IncludeSource>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
     <Version>1.0.0-rc2</Version>
     <Title>JanusGraph.Net</Title>
     <Authors>JanusGraph</Authors>

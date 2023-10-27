@@ -60,7 +60,7 @@ namespace JanusGraph.Net.IO.GraphSON
         }
 
         /// <inheritdoc />
-        public async Task<ResponseMessage<List<object>>> DeserializeMessageAsync(byte[] message,
+        public async Task<ResponseMessage<List<object>>?> DeserializeMessageAsync(byte[] message,
             CancellationToken cancellationToken = default)
         {
             return await _serializer.DeserializeMessageAsync(message, cancellationToken).ConfigureAwait(false);
