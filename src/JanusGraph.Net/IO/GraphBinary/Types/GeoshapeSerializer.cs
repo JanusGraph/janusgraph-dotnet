@@ -46,8 +46,8 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         {
         }
 
-        protected override async Task WriteNonNullableValueAsync(object value, Stream stream, GraphBinaryWriter writer,
-            CancellationToken cancellationToken = default)
+        protected override async Task WriteNonNullableValueInternalAsync(object value, Stream stream,
+            GraphBinaryWriter writer, CancellationToken cancellationToken = default)
         {
             await stream.WriteByteAsync(GeoshapeConstants.GeoshapeFormatVersion, cancellationToken)
                 .ConfigureAwait(false);
@@ -60,7 +60,7 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
             await serializer.WriteNonNullableValueAsync(value, stream, writer, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
+        public override async Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
             CancellationToken cancellationToken = default)
         {
             var formatVersion = await stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
