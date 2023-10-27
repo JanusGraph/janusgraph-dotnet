@@ -34,23 +34,52 @@ namespace JanusGraph.Net.UnitTest
         }
 
         [Fact]
+        public void ToString_ValidRelationIdWithStringIDs_RelationId()
+        {
+            const string relationId = "4qp-Sout_vertex_id-7x1-Sin_vertex_id";
+            var relationIdentifier = new RelationIdentifier(relationId);
+
+            Assert.Equal(relationId, relationIdentifier.ToString());
+        }
+
+        [Fact]
         public void CtrWithStr_ValidRelationId_ExpectedLongValues()
         {
             var relationIdentifier = new RelationIdentifier("4qp-360-7x1-3aw");
 
-            Assert.Equal(4104, relationIdentifier.OutVertexId);
+            Assert.Equal(4104L, relationIdentifier.OutVertexId);
             Assert.Equal(10261, relationIdentifier.TypeId);
             Assert.Equal(6145, relationIdentifier.RelationId);
-            Assert.Equal(4280, relationIdentifier.InVertexId);
+            Assert.Equal(4280L, relationIdentifier.InVertexId);
+        }
+
+        [Fact]
+        public void CtrWithStr_ValidRelationIdWithStringIDs_ExpectedValues()
+        {
+            var relationIdentifier = new RelationIdentifier("4qp-Sout_vertex_id-7x1-Sin_vertex_id");
+
+            Assert.Equal("out_vertex_id", relationIdentifier.OutVertexId);
+            Assert.Equal(10261, relationIdentifier.TypeId);
+            Assert.Equal(6145, relationIdentifier.RelationId);
+            Assert.Equal("in_vertex_id", relationIdentifier.InVertexId);
         }
 
         [Fact]
         public void CtrWithLongs_ValidLongValues_ExpectedStringRepresentation()
         {
-            var relationIdentifier = new RelationIdentifier(4104, 10261, 6145, 4280);
+            var relationIdentifier = new RelationIdentifier(4104L, 10261, 6145, 4280L);
 
             Assert.Equal("4qp-360-7x1-3aw", relationIdentifier.StringRepresentation);
             Assert.Equal("4qp-360-7x1-3aw", relationIdentifier.ToString());
+        }
+
+        [Fact]
+        public void CtrWithLongs_ValidStringIdValues_ExpectedStringRepresentation()
+        {
+            var relationIdentifier = new RelationIdentifier("out_vertex_id", 10261, 6145, "in_vertex_id");
+
+            Assert.Equal("4qp-Sout_vertex_id-7x1-Sin_vertex_id", relationIdentifier.StringRepresentation);
+            Assert.Equal("4qp-Sout_vertex_id-7x1-Sin_vertex_id", relationIdentifier.ToString());
         }
     }
 }

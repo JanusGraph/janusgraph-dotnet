@@ -31,18 +31,18 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         {
         }
 
-        protected override async Task WriteNonNullableValueAsync(object value, Stream stream,
+        protected override async Task WriteNonNullableValueInternalAsync(object value, Stream stream,
             GraphBinaryWriter writer, CancellationToken cancellationToken = default)
         {
             var p = (JanusGraphP)value;
-            await writer.WriteValueAsync(p.OperatorName, stream, false, cancellationToken).ConfigureAwait(false);
+            await writer.WriteNonNullableValueAsync(p.OperatorName, stream, cancellationToken).ConfigureAwait(false);
             await writer.WriteAsync(p.Value, stream, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override async Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
+        public override async Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
             CancellationToken cancellationToken = default)
         {
-            var operatorName = (string)await reader.ReadValueAsync<string>(stream, false, cancellationToken)
+            var operatorName = (string)await reader.ReadNonNullableValueAsync<string>(stream, cancellationToken)
                 .ConfigureAwait(false);
             var value = await reader.ReadAsync(stream, cancellationToken).ConfigureAwait(false);
             return new JanusGraphP(operatorName, value);

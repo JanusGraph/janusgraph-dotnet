@@ -42,12 +42,27 @@ namespace JanusGraph.Net
             var elements = stringRepresentation.Split(ToStringDelimiter);
             if (elements.Length != 3 && elements.Length != 4)
                 throw new ArgumentException($"Not a valid relation identifier: {stringRepresentation}");
-            OutVertexId = LongEncoding.Decode(elements[1]);
+
+            if (elements[1][0] == LongEncoding.StringEncodingMarker)
+            {
+                OutVertexId = elements[1].Substring(1);
+            }
+            else
+            {
+                OutVertexId = LongEncoding.Decode(elements[1]);
+            }
             TypeId = LongEncoding.Decode(elements[2]);
             RelationId = LongEncoding.Decode(elements[0]);
             if (elements.Length == 4)
             {
-                InVertexId = LongEncoding.Decode(elements[3]);
+                if (elements[3][0] == LongEncoding.StringEncodingMarker)
+                {
+                    InVertexId = elements[3].Substring(1);
+                }
+                else
+                {
+                    InVertexId = LongEncoding.Decode(elements[3]);
+                }
             }
         }
 
@@ -58,7 +73,7 @@ namespace JanusGraph.Net
         /// <param name="typeId">The JanusGraph internal type id.</param>
         /// <param name="relationId">The JanusGraph internal relation id.</param>
         /// <param name="inVertexId">The id of the incoming vertex.</param>
-        public RelationIdentifier(long outVertexId, long typeId, long relationId, long inVertexId)
+        public RelationIdentifier(object outVertexId, long typeId, long relationId, object inVertexId)
         {
             OutVertexId = outVertexId;
             TypeId = typeId;
@@ -66,11 +81,29 @@ namespace JanusGraph.Net
             InVertexId = inVertexId;
 
             var sb = new StringBuilder();
-            sb.Append(LongEncoding.Encode(relationId)).Append(ToStringDelimiter)
-                .Append(LongEncoding.Encode(outVertexId)).Append(ToStringDelimiter).Append(LongEncoding.Encode(typeId));
-            if (inVertexId != 0)
+            sb.Append(LongEncoding.Encode(relationId)).Append(ToStringDelimiter);
+            if (outVertexId is long outVLongId)
             {
-                sb.Append(ToStringDelimiter).Append(LongEncoding.Encode(inVertexId));
+                sb.Append(LongEncoding.Encode(outVLongId));
+            }
+            else
+            {
+                sb.Append(LongEncoding.StringEncodingMarker).Append(outVertexId);
+            }
+
+            sb.Append(ToStringDelimiter).Append(LongEncoding.Encode(typeId));
+
+            if (inVertexId != null)
+            {
+                sb.Append(ToStringDelimiter);
+                if (inVertexId is long inVLongId)
+                {
+                    sb.Append(LongEncoding.Encode(inVLongId));
+                }
+                else
+                {
+                    sb.Append(LongEncoding.StringEncodingMarker).Append(inVertexId);
+                }
             }
 
             StringRepresentation = sb.ToString();
@@ -84,7 +117,7 @@ namespace JanusGraph.Net
         /// <summary>
         ///     Gets the id of the outgoing vertex.
         /// </summary>
-        public long OutVertexId { get; }
+        public object OutVertexId { get; }
 
         /// <summary>
         ///     Gets the JanusGraph internal type id.
@@ -99,7 +132,7 @@ namespace JanusGraph.Net
         /// <summary>
         ///     Gets the id of the incoming vertex.
         /// </summary>
-        public long InVertexId { get; }
+        public object InVertexId { get; }
 
         /// <inheritdoc />
         public bool Equals(RelationIdentifier other)

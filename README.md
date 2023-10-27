@@ -101,7 +101,7 @@ of JanusGraph.Net:
 | 0.2.z          | 0.4.z, 0.5.z           |
 | 0.3.z          | 0.4.z, 0.5.z, 0.6.z    |
 | 0.4.z          | (0.4.z, 0.5.z,) 0.6.z  |
-| 1.0.z          | 0.6.z, 1.0.z           |
+| 1.0.z          | (0.6.z,) 1.0.z         |
 
 While it should also be possible to use JanusGraph.Net with other versions of
 JanusGraph than mentioned here, compatibility is not tested and some
@@ -117,8 +117,9 @@ use JanusGraph's Text predicates.
 
 ### JanusGraph.Net 1.0
 
-Since JanusGraph 1.0.0 is not officially released yet, we also only have prerelease versions of JanusGraph.Net.
-Note that serialization of Geoshapes via GraphBinary is only compatible with JanusGraph 1.0.0 and higher.
+GraphBinary serialization includes breaking changes in version 1.0.0.
+JanusGraph.Net 1.0 is therefore only compatible with JanusGraph 0.6 if GraphSON
+is used.
 
 ## Serialization Formats
 

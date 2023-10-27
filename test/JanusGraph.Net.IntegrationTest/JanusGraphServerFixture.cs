@@ -26,6 +26,7 @@ using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Gremlin.Net.Driver;
 using Gremlin.Net.Driver.Remote;
+using JanusGraph.Net.IO.GraphSON;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
@@ -55,7 +56,8 @@ namespace JanusGraph.Net.IntegrationTest
         {
             try
             {
-                using var client = new GremlinClient(new GremlinServer(Host, Port));
+                using var client = new GremlinClient(new GremlinServer(Host, Port),
+                    new JanusGraphGraphSONMessageSerializer());
                 var g = Traversal().WithRemote(new DriverRemoteConnection(client));
                 return g.V().Has("name", "hercules").HasNext();
             }

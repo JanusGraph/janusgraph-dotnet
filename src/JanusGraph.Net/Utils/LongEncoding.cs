@@ -39,6 +39,11 @@ namespace JanusGraph.Net.Utils
         private static readonly int NrSymbols = BaseSymbols.Length;
 
         /// <summary>
+        /// Encoding used to indicate that an id is a string.
+        /// </summary>
+        public static readonly char StringEncodingMarker = 'S';
+
+        /// <summary>
         ///     Decodes a string back into a long.
         /// </summary>
         /// <param name="s">The string to decode.</param>

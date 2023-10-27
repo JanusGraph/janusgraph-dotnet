@@ -48,30 +48,34 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         {
             await stream.WriteIntAsync(_type.TypeId, cancellationToken).ConfigureAwait(false);
 
-            await WriteValueAsync(value, stream, writer, true, cancellationToken).ConfigureAwait(false);
+            await WriteNullableValueAsync(value, stream, writer, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public override async Task WriteValueAsync(object value, Stream stream, GraphBinaryWriter writer, bool nullable,
+        public override async Task WriteNullableValueAsync(object value, Stream stream, GraphBinaryWriter writer,
             CancellationToken cancellationToken = default)
         {
             if (value == null)
             {
-                if (!nullable)
-                {
-                    throw new IOException("Unexpected null value when nullable is false");
-                }
-
                 await writer.WriteValueFlagNullAsync(stream, cancellationToken).ConfigureAwait(false);
                 return;
             }
 
-            if (nullable)
+            await writer.WriteValueFlagNoneAsync(stream, cancellationToken).ConfigureAwait(false);
+
+            await WriteNonNullableValueInternalAsync(value, stream, writer, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <inheritdoc />
+        public override async Task WriteNonNullableValueAsync(object value, Stream stream, GraphBinaryWriter writer,
+            CancellationToken cancellationToken = default)
+        {
+            if (value == null)
             {
-                await writer.WriteValueFlagNoneAsync(stream, cancellationToken).ConfigureAwait(false);
+                throw new IOException($"{nameof(value)} cannot be null");
             }
 
-            await WriteNonNullableValueAsync(value, stream, writer, cancellationToken).ConfigureAwait(false);
+            await WriteNonNullableValueInternalAsync(value, stream, writer, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -82,8 +86,8 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
         /// <param name="writer">A <see cref="GraphBinaryWriter"/> that can be used to write nested values.</param>
         /// <param name="cancellationToken">The token to cancel the operation. The default value is None.</param>
         /// <returns>A task that represents the asynchronous write operation.</returns>
-        protected abstract Task WriteNonNullableValueAsync(object value, Stream stream, GraphBinaryWriter writer,
-            CancellationToken cancellationToken = default);
+        protected abstract Task WriteNonNullableValueInternalAsync(object value, Stream stream,
+            GraphBinaryWriter writer, CancellationToken cancellationToken = default);
 
         /// <inheritdoc />
         public override async Task<object> ReadAsync(Stream stream, GraphBinaryReader reader,
@@ -96,34 +100,21 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
                     $"Custom type info {customTypeInfo} doesn't match expected type info {_type.TypeId}");
             }
 
-            return await ReadValueAsync(stream, reader, true, cancellationToken).ConfigureAwait(false);
+            return await ReadNullableValueAsync(stream, reader, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public override async Task<object> ReadValueAsync(Stream stream, GraphBinaryReader reader, bool nullable,
+        public override async Task<object> ReadNullableValueAsync(Stream stream, GraphBinaryReader reader,
             CancellationToken cancellationToken = default)
         {
-            if (nullable)
+            var valueFlag = await stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
+            if ((valueFlag & 1) == 1)
             {
-                var valueFlag = await stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
-                if ((valueFlag & 1) == 1)
-                {
-                    return null;
-                }
+                return null;
             }
 
             return await ReadNonNullableValueAsync(stream, reader, cancellationToken).ConfigureAwait(false);
         }
-
-        /// <summary>
-        ///     Reads a non-nullable value from the stream.
-        /// </summary>
-        /// <param name="stream">The GraphBinary data to parse.</param>
-        /// <param name="reader">A <see cref="GraphBinaryReader"/> that can be used to read nested values.</param>
-        /// <param name="cancellationToken">The token to cancel the operation. The default value is None.</param>
-        /// <returns>The read value.</returns>
-        protected abstract Task<object> ReadNonNullableValueAsync(Stream stream, GraphBinaryReader reader,
-            CancellationToken cancellationToken = default);
 
         /// <inheritdoc />
         public override string TypeName => _type.TypeName;
