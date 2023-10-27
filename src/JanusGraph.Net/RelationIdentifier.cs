@@ -73,7 +73,7 @@ namespace JanusGraph.Net
         /// <param name="typeId">The JanusGraph internal type id.</param>
         /// <param name="relationId">The JanusGraph internal relation id.</param>
         /// <param name="inVertexId">The id of the incoming vertex.</param>
-        public RelationIdentifier(object outVertexId, long typeId, long relationId, object inVertexId)
+        public RelationIdentifier(object outVertexId, long typeId, long relationId, object? inVertexId)
         {
             OutVertexId = outVertexId;
             TypeId = typeId;
@@ -132,10 +132,10 @@ namespace JanusGraph.Net
         /// <summary>
         ///     Gets the id of the incoming vertex.
         /// </summary>
-        public object InVertexId { get; }
+        public object? InVertexId { get; }
 
         /// <inheritdoc />
-        public bool Equals(RelationIdentifier other)
+        public bool Equals(RelationIdentifier? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -143,7 +143,7 @@ namespace JanusGraph.Net
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
@@ -154,7 +154,7 @@ namespace JanusGraph.Net
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return StringRepresentation != null ? StringRepresentation.GetHashCode() : 0;
+            return StringRepresentation.GetHashCode();
         }
 
         /// <inheritdoc />

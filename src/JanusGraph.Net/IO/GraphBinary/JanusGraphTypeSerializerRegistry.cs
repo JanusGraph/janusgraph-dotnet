@@ -37,7 +37,7 @@ namespace JanusGraph.Net.IO.GraphBinary
         /// </summary>
         public static readonly TypeSerializerRegistry Instance = Build().Create();
 
-        private static Builder Build() => new Builder();
+        private static Builder Build() => new();
 
         /// <summary>
         ///     Builds a <see cref="TypeSerializerRegistry" /> with serializers for JanusGraph types already registered.

@@ -37,8 +37,8 @@ namespace JanusGraph.Net
         private readonly GremlinServer _server;
         private readonly JanusGraphSONReaderBuilder _readerBuilder = JanusGraphSONReaderBuilder.Build();
         private readonly JanusGraphSONWriterBuilder _writerBuilder;
-        private IMessageSerializer _serializer;
-        private ConnectionPoolSettings _connectionPoolSettings;
+        private IMessageSerializer? _serializer;
+        private ConnectionPoolSettings? _connectionPoolSettings;
 
         private JanusGraphClientBuilder(GremlinServer server)
         {

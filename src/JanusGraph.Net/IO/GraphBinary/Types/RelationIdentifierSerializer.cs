@@ -109,7 +109,7 @@ namespace JanusGraph.Net.IO.GraphBinary.Types
             var relationId = await stream.ReadLongAsync(cancellationToken).ConfigureAwait(false);
 
             var inVertexIdMarker = await stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
-            object inVertexId;
+            object? inVertexId;
             if (inVertexIdMarker == StringMarker)
             {
                 inVertexId = await ReadStringAsync(stream, cancellationToken).ConfigureAwait(false);

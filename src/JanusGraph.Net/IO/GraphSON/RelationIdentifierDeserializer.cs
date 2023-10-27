@@ -27,7 +27,7 @@ namespace JanusGraph.Net.IO.GraphSON
     {
         public dynamic Objectify(JsonElement graphsonObject, GraphSONReader reader)
         {
-            return new RelationIdentifier(graphsonObject.GetProperty("relationId").GetString());
+            return new RelationIdentifier(graphsonObject.GetProperty("relationId").GetString()!);
         }
     }
 }
