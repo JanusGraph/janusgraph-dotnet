@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -24,7 +24,7 @@
     <PackageIconUrl>https://raw.githubusercontent.com/JanusGraph/logos/master/RGB%20-%20PNG%20small/JanusGraph%20logomark%20color%20RGB.png</PackageIconUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="Gremlin.Net" Version="3.7.0" />
   </ItemGroup>
   <ItemGroup>
