@@ -24,13 +24,17 @@ on:
     types:
       - published
 
+permissions: { }
+
 env:
   NUGET_KEY: ${{ secrets.NUGET_KEY }}
   NUGET_FEED: https://api.nuget.org/v3/index.json
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -55,7 +59,9 @@ jobs:
   deploy:
     needs: build
     if: github.event_name == 'release'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Download Artifact
