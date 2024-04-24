@@ -18,9 +18,13 @@ name: License Validation
 on:
   pull_request: { }
 
+permissions: { }
+
 jobs:
   weasel:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4

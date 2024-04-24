@@ -19,9 +19,16 @@ on:
   pull_request: { }
   push: { }
 
+permissions: { }
+
 jobs:
   check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -33,5 +40,6 @@ jobs:
         uses: github/super-linter@v6
         env:
           VALIDATE_ALL_CODEBASE: false
+          VALIDATE_JSCPD: false # need to find a way to ignore license headers for duplicate detection
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
