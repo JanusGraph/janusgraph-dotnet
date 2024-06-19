@@ -19,17 +19,12 @@
 #endregion
 
 using System;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
-using Gremlin.Net.Driver;
-using Gremlin.Net.Driver.Remote;
-using JanusGraph.Net.IO.GraphSON;
 using Microsoft.Extensions.Configuration;
 using Xunit;
-using static Gremlin.Net.Process.Traversal.AnonymousTraversalSource;
 
 namespace JanusGraph.Net.IntegrationTest
 {
@@ -48,23 +43,9 @@ namespace JanusGraph.Net.IntegrationTest
                 .WithPortBinding(JanusGraphServerPort, true)
                 .WithBindMount($"{AppContext.BaseDirectory}/load_data.groovy",
                     "/docker-entrypoint-initdb.d/load_data.groovy", AccessMode.ReadOnly)
-                .WithWaitStrategy(Wait.ForUnixContainer().UntilOperationIsSucceeded(IsServerReady, 1000))
+                .WithWaitStrategy(Wait.ForUnixContainer()
+                    .UntilMessageIsLogged("##### Finished loading test graph #####"))
                 .Build();
-        }
-
-        private bool IsServerReady()
-        {
-            try
-            {
-                using var client = new GremlinClient(new GremlinServer(Host, Port),
-                    new JanusGraphGraphSONMessageSerializer());
-                var g = Traversal().WithRemote(new DriverRemoteConnection(client));
-                return g.V().Has("name", "hercules").HasNext();
-            }
-            catch (AggregateException e) when (e.InnerException is WebSocketException)
-            {
-                return false;
-            }
         }
 
         public string Host => _container.Hostname;
