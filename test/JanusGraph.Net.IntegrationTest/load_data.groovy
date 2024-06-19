@@ -44,3 +44,5 @@ g.addV('titan').property('name', 'saturn').property('age', 10000).as('saturn').
   addE('pet').from('pluto').to('cerberus').
   addE('lives').from('cerberus').to('tartarus').
   iterate()
+
+println '##### Finished loading test graph #####'
