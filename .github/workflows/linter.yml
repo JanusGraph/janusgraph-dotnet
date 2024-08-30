@@ -37,7 +37,7 @@ jobs:
           # list of changed files within `super-linter`
           fetch-depth: 0
       - name: Lint Code Base
-        uses: github/super-linter@v6
+        uses: github/super-linter@v7
         env:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JSCPD: false # need to find a way to ignore license headers for duplicate detection
