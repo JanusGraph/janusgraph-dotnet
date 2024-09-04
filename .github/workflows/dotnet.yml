@@ -18,13 +18,13 @@ name: .NET
 on:
   push:
     branches-ignore:
-      - 'dependabot/**'
+      - "dependabot/**"
   pull_request:
   release:
     types:
       - published
 
-permissions: { }
+permissions: {}
 
 env:
   NUGET_KEY: ${{ secrets.NUGET_KEY }}
