@@ -16,9 +16,9 @@
 name: License Validation
 
 on:
-  pull_request: { }
+  pull_request: {}
 
-permissions: { }
+permissions: {}
 
 jobs:
   weasel:
