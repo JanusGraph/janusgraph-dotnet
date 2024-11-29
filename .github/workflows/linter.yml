@@ -41,5 +41,7 @@ jobs:
         env:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JSCPD: false # need to find a way to ignore license headers for duplicate detection
+          VALIDATE_JSON_PRETTIER: false # this unfortunately conflicts with our .editorconfig for no final new line
+          VALIDATE_MARKDOWN_PRETTIER: false # this unfortunately conflicts with our .editorconfig for no final new line
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
