@@ -95,13 +95,14 @@ The lowest supported JanusGraph version is 0.3.0.
 The following table shows the supported JanusGraph versions for each version
 of JanusGraph.Net:
 
-| JanusGraph.Net | JanusGraph             |
-| -------------- | ---------------------- |
-| 0.1.z          | 0.3.z                  |
-| 0.2.z          | 0.4.z, 0.5.z           |
-| 0.3.z          | 0.4.z, 0.5.z, 0.6.z    |
-| 0.4.z          | (0.4.z, 0.5.z,) 0.6.z  |
-| 1.0.z          | (0.6.z,) 1.0.z         |
+| JanusGraph.Net | JanusGraph            |
+| -------------- | --------------------- |
+| 0.1.z          | 0.3.z                 |
+| 0.2.z          | 0.4.z, 0.5.z          |
+| 0.3.z          | 0.4.z, 0.5.z, 0.6.z   |
+| 0.4.z          | (0.4.z, 0.5.z,) 0.6.z |
+| 1.0.z          | (0.6.z,) 1.0.z        |
+| 1.1.z          | 1.0.0, 1.1.z          |
 
 While it should also be possible to use JanusGraph.Net with other versions of
 JanusGraph than mentioned here, compatibility is not tested and some
@@ -132,7 +133,7 @@ Not all of the JanusGraph-specific types are already supported by both formats:
 | Format      | RelationIdentifier | Text predicates | Geoshapes | Geo predicates |
 | ----------- | ------------------ | --------------- | --------- | -------------- |
 | GraphSON3   | x                  | x               | `Point`   | -              |
-| GraphBinary | x                  | x               | `Point`*  | -              |
+| GraphBinary | x                  | x               | `Point`\* | -              |
 
 \* Since version 1.0.0 of JanusGraph.Net.
 JanusGraph also needs to be on version 1.0.0 or higher.

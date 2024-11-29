@@ -33,7 +33,7 @@ namespace JanusGraph.Net.IntegrationTest
         [Theory]
         [InlineData("loves", 2)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextContainsgivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        public async Task TextContainsGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
@@ -43,10 +43,22 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Theory]
+        [InlineData("loves", 1)]
+        [InlineData("shouldNotBeFound", 3)]
+        public async Task TextNotContainsGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.E().Has("reason", Text.TextNotContains(searchText)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
         [InlineData("wave", 1)]
         [InlineData("f", 2)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextContainsPrefixgivenSearchText_ExpectedCountOfElements(string searchText,
+        public async Task TextContainsPrefixGivenSearchText_ExpectedCountOfElements(string searchText,
             int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
@@ -57,10 +69,25 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Theory]
+        [InlineData("wave", 2)]
+        [InlineData("f", 1)]
+        [InlineData("shouldNotBeFound", 3)]
+        public async Task TextNotContainsPrefixGivenSearchText_ExpectedCountOfElements(string searchText,
+            int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.E().Has("reason", Text.TextNotContainsPrefix(searchText)).Count()
+                .Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
         [InlineData(".*ave.*", 1)]
         [InlineData("f.{3,4}", 2)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextContainsRegexgivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
+        public async Task TextContainsRegexGivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
@@ -70,9 +97,22 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Theory]
+        [InlineData(".*ave.*", 2)]
+        [InlineData("f.{3,4}", 1)]
+        [InlineData("shouldNotBeFound", 3)]
+        public async Task TextNotContainsRegexGivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.E().Has("reason", Text.TextNotContainsRegex(regex)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
         [InlineData("waxes", 1)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextContainsFuzzygivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        public async Task TextContainsFuzzyGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
@@ -82,10 +122,54 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Theory]
+        [InlineData("waxes", 2)]
+        [InlineData("shouldNotBeFound", 3)]
+        public async Task TextNotContainsFuzzyGivenSearchText_ExpectedCountOfElements(string searchText,
+            int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.E().Has("reason", Text.TextNotContainsFuzzy(searchText)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
+        [InlineData("fresh breezes", 1)]
+        [InlineData("no fear", 1)]
+        [InlineData("fear of", 1)]
+        [InlineData("shouldNotBeFound", 0)]
+        public async Task TextContainsPhraseGivenSearchText_ExpectedCountOfElements(string searchText,
+            int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.E().Has("reason", Text.TextContainsPhrase(searchText)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
+        [InlineData("fresh breezes", 2)]
+        [InlineData("no fear", 2)]
+        [InlineData("fear of", 2)]
+        [InlineData("shouldNotBeFound", 3)]
+        public async Task TextNotContainsPhraseGivenSearchText_ExpectedCountOfElements(string searchText,
+            int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.E().Has("reason", Text.TextNotContainsPhrase(searchText)).Count()
+                .Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
         [InlineData("herc", 1)]
         [InlineData("s", 3)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextPrefixgivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        public async Task TextPrefixGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
@@ -95,10 +179,23 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Theory]
+        [InlineData("herc", 11)]
+        [InlineData("s", 9)]
+        [InlineData("shouldNotBeFound", 12)]
+        public async Task TextNotPrefixGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.V().Has("name", Text.TextNotPrefix(searchText)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
         [InlineData(".*rcule.*", 1)]
         [InlineData("s.{2}", 2)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextRegexgivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
+        public async Task TextRegexGivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
@@ -108,14 +205,40 @@ namespace JanusGraph.Net.IntegrationTest
         }
 
         [Theory]
+        [InlineData(".*rcule.*", 11)]
+        [InlineData("s.{2}", 10)]
+        [InlineData("shouldNotBeFound", 12)]
+        public async Task TextNotRegexGivenRegex_ExpectedCountOfElements(string regex, int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.V().Has("name", Text.TextNotRegex(regex)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
         [InlineData("herculex", 1)]
         [InlineData("ska", 2)]
         [InlineData("shouldNotBeFound", 0)]
-        public async Task TextFuzzygivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        public async Task TextFuzzyGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
         {
             var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
 
             var count = await g.V().Has("name", Text.TextFuzzy(searchText)).Count().Promise(t => t.Next());
+
+            Assert.Equal(expectedCount, count);
+        }
+
+        [Theory]
+        [InlineData("herculex", 11)]
+        [InlineData("ska", 10)]
+        [InlineData("shouldNotBeFound", 12)]
+        public async Task TextNotFuzzyGivenSearchText_ExpectedCountOfElements(string searchText, int expectedCount)
+        {
+            var g = Traversal().WithRemote(ConnectionFactory.CreateRemoteConnection());
+
+            var count = await g.V().Has("name", Text.TextNotFuzzy(searchText)).Count().Promise(t => t.Next());
 
             Assert.Equal(expectedCount, count);
         }
