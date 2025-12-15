@@ -51,7 +51,7 @@ jobs:
       - name: Pack
         run: dotnet pack ./src/JanusGraph.Net/JanusGraph.Net.csproj -v minimal -c Release --no-build -o ./artifacts
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: artifacts
           path: ./artifacts/*.nupkg
